@@ -1,11 +1,11 @@
 package de.blutmondgilde.skyblock;
 
+import de.blutmondgilde.skyblock.proxy.ClientProxy;
+import de.blutmondgilde.skyblock.proxy.CommonProxy;
+import de.blutmondgilde.skyblock.proxy.ServerProxy;
 import lombok.Getter;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
-import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,17 +14,19 @@ public class Skyblock {
     public static final String MOD_ID = "skyblock";
     @Getter
     private static final Logger Logger = LogManager.getLogger();
+    @Getter
+    private static Skyblock instance;
+    private final CommonProxy proxy;
 
     public Skyblock() {
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
+        instance = this;
+        proxy = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> ServerProxy::new);
     }
 
-    private void setup(final FMLCommonSetupEvent event) {
+    /**
+     * Returns the Proxy instance
+     */
+    public static CommonProxy getProxy() {
+        return instance.proxy;
     }
-
-    private void enqueueIMC(final InterModEnqueueEvent event) {}
-
-    private void processIMC(final InterModProcessEvent event) {}
 }
