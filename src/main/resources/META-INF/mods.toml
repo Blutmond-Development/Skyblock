@@ -1,0 +1,28 @@
+modLoader = "javafml" #mandatory
+loaderVersion = "[${loaderVersion},)" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists of versions.
+license = "All Rights Reserved"
+#issueTrackerURL="http://my.issue.tracker/" #optional
+[[mods]] #mandatory
+modId = "${modId}" #mandatory
+version = "${modVersion}" #mandatory
+displayName = "Skyblock" #mandatory
+#updateJSONURL="http://myurl.me/" #optional
+#displayURL="http://example.com/" #optional
+#logoFile="skyblock.png" #optional
+#credits="Thanks for this example mod goes to Java" #optional
+authors = "MrProfessor" #optional
+description = '''
+Hypixel inspired Skyblock addon with a small RPG flavor
+'''
+[[dependencies.skyblock]] #optional
+modId = "forge" #mandatory
+mandatory = true #mandatory
+versionRange = "[${loaderVersion},)" #mandatory
+ordering = "NONE"
+side = "BOTH"
+[[dependencies.skyblock]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[${minecraftversion},${minecraftMaxVersion})"
+ordering = "NONE"
+side = "BOTH"
