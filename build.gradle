@@ -113,6 +113,8 @@ mixin {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
+    //GeckoLib
+    maven { url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
 }
 
 dependencies {
@@ -120,6 +122,7 @@ dependencies {
     annotationProcessor "org.spongepowered:mixin:${mixinVersion}:processor"
     compileOnly "org.projectlombok:lombok:${lombokVersion}"
     annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    implementation fg.deobf("software.bernie.geckolib:${geckolibType}:${geckolibVersion}")
 }
 
 // Example for how to get properties into the manifest for reading at runtime.
@@ -146,7 +149,7 @@ def replaceResources = tasks.register("replaceResources", Copy) {
         String loaderVersion = forgeVersion.substring(0, forgeVersion.indexOf("."))
         include "META-INF/mods.toml"
         expand 'modVersion': "${modVersion}", 'minecraftVersion': "${minecraftVersion}", 'minecraftMaxVersion': "${minecraftMaxVersion}",
-                'loaderVersion': loaderVersion, 'modId': "${modId}"
+                'loaderVersion': loaderVersion, 'modId': "${modId}", 'geckolibVersion': "${geckolibVersion}"
     }
     it.into "$buildDir/resources/main/"
 }
