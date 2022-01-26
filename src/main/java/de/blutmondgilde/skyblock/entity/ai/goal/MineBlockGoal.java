@@ -10,7 +10,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.ForgeHooks;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,10 +30,12 @@ public class MineBlockGoal extends Goal {
 
     @Override
     public boolean canUse() {
+        if (!mob.getInventory().hasSpace()) return false;
         if (!targetPos.equals(BlockPos.ZERO)) return false;
         Optional<BlockPos> nextBlockPos = BlockPos.findClosestMatch(mob.blockPosition().offset(0, -1, 0), 2, 0, this::isValidBlock);
         if (nextBlockPos.isEmpty()) return false;
         this.targetPos = nextBlockPos.get();
+        mob.setTargetBlock(nextBlockPos.get());
 
         return ForgeHooks.canEntityDestroy(mob.level, this.targetPos, this.mob);
     }
@@ -46,6 +47,7 @@ public class MineBlockGoal extends Goal {
 
     private void reset() {
         this.targetPos = BlockPos.ZERO;
+        mob.setTargetBlock(BlockPos.ZERO);
         this.passed = true;
         this.breakTicks = 0;
     }
@@ -67,13 +69,18 @@ public class MineBlockGoal extends Goal {
             reset();
             return;
         }
+
         this.breakTicks++;
         if (this.breakTicks >= getMiningDuration()) {
             //finish
             if (mob.level instanceof ServerLevel level) {
                 List<ItemStack> drops = Block.getDrops(mob.level.getBlockState(targetPos), level, this.targetPos, null, this.mob, new ItemStack(Items.NETHERITE_PICKAXE));
-                Skyblock.getLogger().info("Mined {}", Arrays.toString(drops.stream().map(ItemStack::toString).toArray()));
-                //TODO add drops to minion inventory
+                drops.forEach(itemStack -> {
+                    if (mob.getInventory().canAddItem(itemStack)) {
+                        mob.getInventory().addItem(itemStack);
+                        Skyblock.getLogger().info("Mined {}", itemStack.getItem());
+                    }
+                });
                 mob.setBreaking(false);
 
             }

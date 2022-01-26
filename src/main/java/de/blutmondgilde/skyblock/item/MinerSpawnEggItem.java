@@ -2,6 +2,7 @@ package de.blutmondgilde.skyblock.item;
 
 import de.blutmondgilde.skyblock.entity.minion.miner.MinerEntity;
 import de.blutmondgilde.skyblock.registry.SkyblockRegistries;
+import de.blutmondgilde.skyblock.registry.SkyblockTabs;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -9,11 +10,9 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraftforge.common.ForgeSpawnEggItem;
@@ -24,11 +23,9 @@ import java.util.Objects;
 public class MinerSpawnEggItem extends ForgeSpawnEggItem {
     private static final Color backgroundColor = new Color(94, 94, 94);
     private static final Color highlightColor = new Color(23, 23, 23);
-    private Block minerTargetBlock;
 
     public MinerSpawnEggItem() {
-        super(SkyblockRegistries.entities.coalMiner, backgroundColor.getRGB(), highlightColor.getRGB(), new Properties().tab(CreativeModeTab.TAB_MISC));
-
+        super(SkyblockRegistries.entities.coalMiner, backgroundColor.getRGB(), highlightColor.getRGB(), new Properties().tab(SkyblockTabs.MINIONS));
     }
 
     @Override

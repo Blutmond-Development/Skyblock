@@ -1,3 +1,16 @@
 {
-  "skyblock.entity.miner": "%s's %s Minion"
+  "skyblock.entity.miner": "%s's %s Minion",
+  "skyblock.container.miner": "%s - Level %s",
+  "itemGroup.skyblock.minions": "Skyblock - Minions",
+  "itemGroup.skyblock.upgrades": "Skyblock - Minion Upgrades",
+  "item.skyblock.miner_spawn_egg": "Miner Summoner Stone",
+  "skyblock.text.time.minute": "%s minute",
+  "skyblock.text.time.minutes": "%s minutes",
+  "skyblock.text.time.hour": "%s hour",
+  "skyblock.text.time.hours": "%s hours",
+  "skyblock.text.time.day": "%s day",
+  "skyblock.text.time.days": "%s days",
+  "skyblock.text.minion.fuel": "Increases the speed of your minion by %s %s",
+  "skyblock.text.duration": "for %s",
+  "skyblock.text.time.and": "and"
 }

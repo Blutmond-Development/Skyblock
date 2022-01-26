@@ -1,10 +1,14 @@
 package de.blutmondgilde.skyblock.entity.minion.miner;
 
 import de.blutmondgilde.skyblock.Skyblock;
+import de.blutmondgilde.skyblock.container.MinerContainer;
+import de.blutmondgilde.skyblock.entity.ai.goal.LookAtTargetGoal;
 import de.blutmondgilde.skyblock.entity.ai.goal.MineBlockGoal;
 import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -16,6 +20,8 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.OwnableEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.npc.InventoryCarrier;
+import net.minecraft.world.entity.npc.Npc;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.ForgeMod;
@@ -32,13 +38,20 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Supplier;
 
-public abstract class MinerEntity extends Mob implements OwnableEntity, IAnimatable {
+public abstract class MinerEntity extends Mob implements OwnableEntity, IAnimatable, Npc, InventoryCarrier {
     private static final EntityDataAccessor<Boolean> BREAKING = SynchedEntityData.defineId(MinerEntity.class, EntityDataSerializers.BOOLEAN);
     @Getter
     private UUID ownerUUID = null;
     private final AnimationFactory animationFactory = new AnimationFactory(this);
     private int replacementCounter = 100;
     private Optional<BlockPos> nextReplacement = Optional.empty();
+    @Getter
+    private int minionLevel = 1;
+    @Getter
+    private MinerContainer inventory = new MinerContainer(this);
+    @Getter
+    @Setter
+    private BlockPos targetBlock = BlockPos.ZERO;
 
     public MinerEntity(EntityType<MinerEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -50,6 +63,10 @@ public abstract class MinerEntity extends Mob implements OwnableEntity, IAnimata
             .add(Attributes.ATTACK_SPEED)
             .add(ForgeMod.REACH_DISTANCE.get(), 2)
             .add(Attributes.KNOCKBACK_RESISTANCE, 1);
+    }
+
+    public void levelUp() {
+        minionLevel++;
     }
 
     @Override
@@ -64,8 +81,14 @@ public abstract class MinerEntity extends Mob implements OwnableEntity, IAnimata
     }
 
     @Override
+    public boolean canBeCollidedWith() {
+        return false;
+    }
+
+    @Override
     protected void registerGoals() {
         goalSelector.addGoal(1, new MineBlockGoal(getMiningTarget().get(), this, 20 * 15));
+        goalSelector.addGoal(1, new LookAtTargetGoal(this));
     }
 
     public abstract Supplier<Block> getMiningTarget();
@@ -141,6 +164,7 @@ public abstract class MinerEntity extends Mob implements OwnableEntity, IAnimata
         super.addAdditionalSaveData(pCompound);
         pCompound.putUUID("owner", this.ownerUUID);
         pCompound.putBoolean("breaking", this.entityData.get(BREAKING));
+        pCompound.put("Inventory", this.inventory.createTag());
     }
 
     @Override
@@ -148,6 +172,7 @@ public abstract class MinerEntity extends Mob implements OwnableEntity, IAnimata
         super.readAdditionalSaveData(pCompound);
         this.ownerUUID = pCompound.getUUID("owner");
         this.entityData.set(BREAKING, pCompound.getBoolean("breaking"));
+        this.inventory.fromTag(pCompound.getList("Inventory", Tag.TAG_COMPOUND));
     }
 
     public void setBreaking(boolean value) {
