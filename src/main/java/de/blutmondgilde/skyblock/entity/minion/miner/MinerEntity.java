@@ -9,6 +9,7 @@ import lombok.Setter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -25,6 +26,7 @@ import net.minecraft.world.entity.npc.Npc;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.ForgeMod;
+import net.minecraftforge.common.Tags;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -91,7 +93,7 @@ public abstract class MinerEntity extends Mob implements OwnableEntity, IAnimata
         goalSelector.addGoal(1, new LookAtTargetGoal(this));
     }
 
-    public abstract Supplier<Block> getMiningTarget();
+    public abstract Supplier<Tags.IOptionalNamedTag<Block>> getMiningTarget();
 
     public abstract Supplier<Block> getReplacementBlock();
 
@@ -107,8 +109,10 @@ public abstract class MinerEntity extends Mob implements OwnableEntity, IAnimata
 
     public void setOwnerUUID(UUID ownerUUID) {
         this.ownerUUID = ownerUUID;
-        setCustomName(new TranslatableComponent(Skyblock.MOD_ID + ".entity.miner", getOwner().getDisplayName(), getMiningTarget().get().getName()));
+        setCustomName(new TranslatableComponent(Skyblock.MOD_ID + ".entity.miner", getOwner().getDisplayName(), getResultName()));
     }
+
+    protected abstract MutableComponent getResultName();
 
     @Override
     public void tick() {
@@ -123,7 +127,7 @@ public abstract class MinerEntity extends Mob implements OwnableEntity, IAnimata
             this.replacementCounter--;
             if (replacementCounter == 0) {
                 replacementCounter = 100;
-                level.setBlockAndUpdate(nextReplacement.get(), getMiningTarget().get().defaultBlockState());
+                level.setBlockAndUpdate(nextReplacement.get(), getMiningTarget().get().getRandomElement(random).defaultBlockState());
                 this.nextReplacement = Optional.empty();
             }
         } else {

@@ -9,12 +9,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.Tags;
 
 import java.util.List;
 import java.util.Optional;
 
 public class MineBlockGoal extends Goal {
-    private final Block targetBlock;
+    private final Tags.IOptionalNamedTag<Block> targetBlock;
     private final MinerEntity mob;
     private final int requiredBreakTicks;
     private BlockPos targetPos = BlockPos.ZERO;
@@ -22,7 +23,7 @@ public class MineBlockGoal extends Goal {
     private int breakTicks = 0;
 
 
-    public MineBlockGoal(Block targetBlock, MinerEntity mob, int requiredBreakTicks) {
+    public MineBlockGoal(Tags.IOptionalNamedTag<Block> targetBlock, MinerEntity mob, int requiredBreakTicks) {
         this.targetBlock = targetBlock;
         this.mob = mob;
         this.requiredBreakTicks = requiredBreakTicks;
@@ -110,6 +111,6 @@ public class MineBlockGoal extends Goal {
      */
     private boolean isValidBlock(BlockPos pos) {
         if (pos.equals(mob.blockPosition().below())) return false; //Prevent the Miner from mining down
-        return mob.level.getBlockState(pos).getBlock().equals(this.targetBlock);
+        return this.targetBlock.contains(mob.level.getBlockState(pos).getBlock());
     }
 }
