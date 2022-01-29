@@ -2,6 +2,8 @@ package de.blutmondgilde.skyblock.proxy;
 
 import de.blutmondgilde.skyblock.client.renderer.MinerRenderer;
 import de.blutmondgilde.skyblock.registry.SkyblockRegistries;
+import net.minecraft.client.Minecraft;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 
 public class ClientProxy extends CommonProxy {
@@ -17,5 +19,10 @@ public class ClientProxy extends CommonProxy {
 
     private void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers e) {
         e.registerEntityRenderer(SkyblockRegistries.entities.coalMiner.get(), MinerRenderer::new);
+    }
+
+    @Override
+    public Level getLevel() {
+        return Minecraft.getInstance().level;
     }
 }

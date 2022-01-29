@@ -1,6 +1,5 @@
 package de.blutmondgilde.skyblock.entity.ai.goal;
 
-import de.blutmondgilde.skyblock.Skyblock;
 import de.blutmondgilde.skyblock.entity.minion.miner.MinerEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -13,6 +12,7 @@ import net.minecraftforge.common.Tags;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MineBlockGoal extends Goal {
     private final Tags.IOptionalNamedTag<Block> targetBlock;
@@ -31,10 +31,14 @@ public class MineBlockGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        if (!mob.getInventory().hasSpace()) return false;
+        //Check if Inventory is full
+        if (mob.isInventoryFull()) return false;
+        //Check if target block is valid
         if (!targetPos.equals(BlockPos.ZERO)) return false;
+        //Find next target
         Optional<BlockPos> nextBlockPos = BlockPos.findClosestMatch(mob.blockPosition().offset(0, -1, 0), 2, 0, this::isValidBlock);
         if (nextBlockPos.isEmpty()) return false;
+        //Set next target
         this.targetPos = nextBlockPos.get();
         mob.setTargetBlock(nextBlockPos.get());
 
@@ -75,13 +79,34 @@ public class MineBlockGoal extends Goal {
         if (this.breakTicks >= getMiningDuration()) {
             //finish
             if (mob.level instanceof ServerLevel level) {
+                //Get Block drops
                 List<ItemStack> drops = Block.getDrops(mob.level.getBlockState(targetPos), level, this.targetPos, null, this.mob, new ItemStack(Items.NETHERITE_PICKAXE));
+                AtomicBoolean hasAddedItem = new AtomicBoolean(false);
+                //Try to add each drop to the inventory
                 drops.forEach(itemStack -> {
-                    if (mob.getInventory().canAddItem(itemStack)) {
-                        mob.getInventory().addItem(itemStack);
-                        Skyblock.getLogger().info("Mined {}", itemStack.getItem());
+                    ItemStack remainingItems = itemStack.copy();
+                    //Check each inventory slot for space
+                    for (int i = 4; i < mob.getInventory().getSlots() || remainingItems == ItemStack.EMPTY; i++) {
+                        //Check if itemStack can take all items
+                        if (mob.getInventory().insertItem(i, remainingItems, true) != ItemStack.EMPTY) {
+                            //Try to add items
+                            ItemStack notAddedItems = mob.getInventory().insertItem(i, remainingItems, false);
+                            //Check if any item has been added
+                            if (notAddedItems.getCount() != remainingItems.getCount()) {
+                                hasAddedItem.set(true);
+                                //update remaining items
+                                remainingItems = notAddedItems;
+                            }
+                        } else {
+                            //Add all items into the
+                            mob.getInventory().insertItem(i, remainingItems, false);
+                            hasAddedItem.set(true);
+                            break;
+                        }
                     }
                 });
+
+                this.mob.setInventoryFull(!hasAddedItem.get());
                 mob.setBreaking(false);
 
             }
