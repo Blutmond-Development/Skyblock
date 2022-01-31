@@ -38,8 +38,8 @@ public class MinerMinionContainerScreen extends AbstractContainerScreen<MinionMe
         addRenderableWidget(levelUpButton);
         titleLabelX = font.width(title) / 2;
         titleLabelY = 5;
-        levelMessageX = titleLabelX + font.width(title) / 2;
-        levelMessageY = titleLabelY;
+        levelMessageX = getGuiLeft() + font.width(title) / 2 + font.width(title);
+        levelMessageY = getGuiTop() + titleLabelY;
         inventoryLabelX = imageWidth - font.width(playerInventoryTitle) - 7;
         inventoryLabelY = imageHeight - 95;
         this.levelUpButton.x = leftPos + imageWidth - levelUpButton.getWidth() - 16;
