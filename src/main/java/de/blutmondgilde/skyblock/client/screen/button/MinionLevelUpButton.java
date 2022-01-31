@@ -33,8 +33,8 @@ public class MinionLevelUpButton extends Button {
     public MinionLevelUpButton(MinionEntity minionEntity, Inventory playerInventory, Screen parent) {
         super(0, 0, 20, 20, new TextComponent(""), pButton -> {
             SkyblockNetwork.getInstance().sendToServer(new RequestMinionLevelUp(minionEntity.getId()));
+            parent.onClose();
         }, (pButton, pPoseStack, pMouseX, pMouseY) -> {
-
             List<FormattedCharSequence> toolTip = new ArrayList<>();
             //Title
             MutableComponent currentLvl = new TextComponent(String.valueOf(minionEntity.getMinionLevel())).withStyle(Style.EMPTY.withBold(true).withColor(new Color(1, 203, 15).getRGB()));

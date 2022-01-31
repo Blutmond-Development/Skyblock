@@ -40,7 +40,6 @@ public class MinionMenu extends AbstractContainerMenu {
         }
     }
 
-
     private void setupMinerSlots() {
         int upgradeX = 8;
         int upgradeY = 2;
@@ -52,7 +51,9 @@ public class MinionMenu extends AbstractContainerMenu {
         int inventoryX = 44;
         int inventoryY = 20;
         for (int i = 4; i < minionInventory.getSlots(); i++) {
-            addSlot(new MinionInventorySlot(this.minionInventory, i, inventoryX, inventoryY, minerEntity));
+            int x = inventoryX + 18 * ((i - 4) % 5);
+            int y = inventoryY + 18 * ((i - 4) / 5);
+            addSlot(new MinionInventorySlot(this.minionInventory, i, x, y, minerEntity));
         }
     }
 

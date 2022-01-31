@@ -73,11 +73,11 @@ public abstract class MinionEntity extends Mob implements OwnableEntity, IAnimat
     protected int getInventorySize() {
         return switch (entityData.get(LEVEL)) {
             default -> 1;
-            case 2 -> 3;
-            case 4 -> 6;
-            case 6 -> 9;
-            case 8 -> 12;
-            case 10 -> 15;
+            case 2, 3 -> 3;
+            case 4, 5 -> 6;
+            case 6, 7 -> 9;
+            case 8, 9 -> 12;
+            case 10, 11, 12 -> 15;
         };
     }
 
@@ -304,5 +304,13 @@ public abstract class MinionEntity extends Mob implements OwnableEntity, IAnimat
     @Override
     public void containerChanged(Container pInvBasic) {
         //???
+    }
+
+    @Override
+    public void onSyncedDataUpdated(EntityDataAccessor<?> pKey) {
+        super.onSyncedDataUpdated(pKey);
+        if (pKey.equals(LEVEL)) {
+            inventory.setNewSize(getInventorySize());
+        }
     }
 }
