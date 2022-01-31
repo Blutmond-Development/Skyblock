@@ -34,7 +34,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
@@ -53,7 +52,7 @@ public abstract class MinionEntity extends Mob implements OwnableEntity, IAnimat
     @Getter
     protected UUID ownerUUID = null;
     @Getter
-    protected final ItemStackHandler inventory;
+    protected final MinionInventory inventory;
     @Setter
     @Getter
     protected boolean inventoryFull = false;
@@ -223,7 +222,7 @@ public abstract class MinionEntity extends Mob implements OwnableEntity, IAnimat
             canLevelUp(inventory, false);
             int level = getMinionLevel() + 1;
             entityData.set(LEVEL, level);
-            this.inventory.setSize(getInventorySize());
+            this.inventory.setNewSize(getInventorySize());
         } else {
             inventory.player.sendMessage(new TranslatableComponent("skyblock.upgrade.material.missing").withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED), Util.NIL_UUID);
         }

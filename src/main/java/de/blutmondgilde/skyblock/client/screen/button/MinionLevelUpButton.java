@@ -31,7 +31,7 @@ public class MinionLevelUpButton extends Button {
     private final Inventory playerInventory;
 
     public MinionLevelUpButton(MinionEntity minionEntity, Inventory playerInventory, Screen parent) {
-        super(0, 0, 16, 16, new TextComponent(""), pButton -> {
+        super(0, 0, 20, 20, new TextComponent(""), pButton -> {
             SkyblockNetwork.getInstance().sendToServer(new RequestMinionLevelUp(minionEntity.getId()));
         }, (pButton, pPoseStack, pMouseX, pMouseY) -> {
 

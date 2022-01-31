@@ -19,12 +19,11 @@ public class MinionInventory extends ItemStackHandler {
         super(4 + inventorySize);
     }
 
-    @Override
-    public void setSize(int size) {
+    public void setNewSize(int inventorySize){
         //Get current Items
         NonNullList<ItemStack> items = stacks;
         //Expand Size
-        super.setSize(size + 4);
+        super.setSize(inventorySize + 4);
         //Insert old items into their old slots
         for (int i = 0; i < items.size(); i++) {
             stacks.set(i, items.get(i));
