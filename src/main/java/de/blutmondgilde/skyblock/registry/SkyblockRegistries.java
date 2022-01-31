@@ -8,6 +8,7 @@ public class SkyblockRegistries {
     private static final ArrayList<AbstractSkyblockRegistry> registries = new ArrayList<>();
     public static final SkyblockEntities entities = new SkyblockEntities();
     public static final SkyblockItems items = new SkyblockItems();
+    public static final SkyblockBlocks blocks = new SkyblockBlocks();
     public static final SkyblockMinionFuelRegistry minionFuel = new SkyblockMinionFuelRegistry();
     public static final SkyblockContainer container = new SkyblockContainer();
 

@@ -12,5 +12,12 @@
   "skyblock.text.time.days": "%s days",
   "skyblock.text.minion.fuel": "Increases the speed of your minion by %s %s",
   "skyblock.text.duration": "for %s",
-  "skyblock.text.time.and": "and"
+  "skyblock.text.time.and": "and",
+  "skyblock.gui.minion.slot.unlock.hover": "Unlock slot at minion level %s",
+  "skyblock.gui.minion.level": " %s",
+  "skyblock.gui.minion.level.up.0": "Next Tier (%s → %s)",
+  "skyblock.gui.minion.level.up.1": "required Items to upgrade to the next tier:",
+  "skyblock.upgrade.material.missing": "You can't upgrade this minion! You're missing some material.",
+  "skyblock.minion.level.up.max": "This minion is already on this maximum tier!",
+  "skyblock.minion.level.up.requirements": "%s of %s %s"
 }

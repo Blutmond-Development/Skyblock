@@ -10,12 +10,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
-public class MinerMinionInventory extends ItemStackHandler {
-    public MinerMinionInventory() {
+public class MinionInventory extends ItemStackHandler {
+    public MinionInventory() {
         super(4);
     }
 
-    public MinerMinionInventory(int inventorySize) {
+    public MinionInventory(int inventorySize) {
         super(4 + inventorySize);
     }
 
@@ -24,7 +24,7 @@ public class MinerMinionInventory extends ItemStackHandler {
         //Get current Items
         NonNullList<ItemStack> items = stacks;
         //Expand Size
-        super.setSize(size);
+        super.setSize(size + 4);
         //Insert old items into their old slots
         for (int i = 0; i < items.size(); i++) {
             stacks.set(i, items.get(i));

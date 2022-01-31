@@ -1,6 +1,8 @@
 package de.blutmondgilde.skyblock.registry;
 
+import de.blutmondgilde.skyblock.item.InstructionsOfTheMasterItem;
 import de.blutmondgilde.skyblock.item.MinerSpawnEggItem;
+import de.blutmondgilde.skyblock.item.block.EfficientCoalBlockItem;
 import de.blutmondgilde.skyblock.item.fuel.EfficientCharCoalItem;
 import de.blutmondgilde.skyblock.item.fuel.EfficientCoalItem;
 import de.blutmondgilde.skyblock.item.fuel.TastyBreadItem;
@@ -16,6 +18,8 @@ public class SkyblockItems extends AbstractSkyblockRegistry {
     public final RegistryObject<EfficientCharCoalItem> efficientCharCoalItem = registry.register("efficient_char_coal", EfficientCharCoalItem::new);
     public final RegistryObject<EfficientCoalItem> efficientCoalItem = registry.register("efficient_coal", EfficientCoalItem::new);
     public final RegistryObject<TastyBreadItem> tastyBreadItem = registry.register("tasty_bread", TastyBreadItem::new);
+    public final RegistryObject<EfficientCoalBlockItem> efficientCoalBlock = registry.register("efficient_coal_block", EfficientCoalBlockItem::new);
+    public final RegistryObject<InstructionsOfTheMasterItem> instructionsOfTheMaster = registry.register("instructions_of_the_master", InstructionsOfTheMasterItem::new);
 
     @Override
     void register(IEventBus modBus) {

@@ -6,6 +6,7 @@ import de.blutmondgilde.skyblock.fuel.CoalFuel;
 import de.blutmondgilde.skyblock.fuel.MinionFuel;
 import de.blutmondgilde.skyblock.fuel.MinionFuelWrapper;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryBuilder;
@@ -33,6 +34,19 @@ public class SkyblockMinionFuelRegistry extends AbstractSkyblockRegistry {
 
     @Nullable
     public MinionFuel findByItem(Item item) {
-        return RegistryObject.of(item.getRegistryName(), () -> MinionFuel.class).get();
+        if (item.equals(Items.COAL)) {
+            return coal.get();
+        }
+
+        if (item.equals(Items.COAL_BLOCK)) {
+            return coalBlock.get();
+        }
+
+        try {
+            RegistryObject<MinionFuel> result = RegistryObject.of(item.getRegistryName(), () -> MinionFuel.class);
+            return result.get();
+        } catch (NullPointerException ignore) {
+            return null;
+        }
     }
 }

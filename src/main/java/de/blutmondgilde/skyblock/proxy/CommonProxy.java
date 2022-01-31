@@ -1,7 +1,8 @@
 package de.blutmondgilde.skyblock.proxy;
 
 import de.blutmondgilde.skyblock.entity.minion.miner.MinerEntity;
-import de.blutmondgilde.skyblock.event.MinionEventHandler;
+import de.blutmondgilde.skyblock.event.handler.MinionEventHandler;
+import de.blutmondgilde.skyblock.network.SkyblockNetwork;
 import de.blutmondgilde.skyblock.registry.SkyblockRegistries;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.MinecraftForge;
@@ -35,7 +36,9 @@ public abstract class CommonProxy {
         return ServerLifecycleHooks.getCurrentServer().overworld();
     }
 
-    protected void setup(final FMLCommonSetupEvent e) {}
+    protected void setup(final FMLCommonSetupEvent e) {
+        e.enqueueWork(SkyblockNetwork::registerPackets);
+    }
 
     protected void clientSetup(final FMLClientSetupEvent e) {}
 
