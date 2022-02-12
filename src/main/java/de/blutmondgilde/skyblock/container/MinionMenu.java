@@ -6,6 +6,8 @@ import lombok.Getter;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
@@ -15,6 +17,8 @@ public class MinionMenu extends AbstractContainerMenu {
     private final ItemStackHandler minionInventory;
     @Getter
     private final MinionEntity minerEntity;
+    private int minionSlotAmount = 0;
+    private int lastHotBarIndex, lastInventoryIndex;
 
     public MinionMenu(int pContainerId, Inventory inventory, MinionEntity minerEntity) {
         super(SkyblockRegistries.container.minerMinionMenu.get(), pContainerId);
@@ -29,15 +33,19 @@ public class MinionMenu extends AbstractContainerMenu {
     private void setupPlayerSlots() {
         int index = 0;
 
+        //Hot bar
         for (int col = 0; col < 9; col++) {
             addSlot(new SlotItemHandler(this.playerInvWrapper, index++, 8 + 18 * col, 140));
         }
+        lastHotBarIndex = slots.size();
 
+        //Inventory
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 9; col++) {
                 addSlot(new SlotItemHandler(this.playerInvWrapper, index++, 8 + 18 * col, 82 + 18 * row));
             }
         }
+        lastInventoryIndex = slots.size();
     }
 
     private void setupMinerSlots() {
@@ -55,10 +63,80 @@ public class MinionMenu extends AbstractContainerMenu {
             int y = inventoryY + 18 * ((i - 4) / 5);
             addSlot(new MinionInventorySlot(this.minionInventory, i, x, y, minerEntity));
         }
+        minionSlotAmount = slots.size();
     }
 
     @Override
     public boolean stillValid(Player pPlayer) {
         return true;
+    }
+
+    @Override
+    public ItemStack quickMoveStack(Player pPlayer, int pIndex) {
+        ItemStack slotItemStack = slots.get(pIndex).getItem();
+        if (slotItemStack.isEmpty()) return ItemStack.EMPTY;
+
+        if (pIndex < minionSlotAmount) {
+            //Handle Minion Inventory Shift-Click
+            //Check Space in Inventory
+            for (int i = lastHotBarIndex; i < lastInventoryIndex; i++) {
+                Slot currentCurrentSlot = getSlot(i);
+                //Check if slot exist
+                if (currentCurrentSlot == null) {
+                    break;
+                }
+                //Try to place Item into the Player Slot
+                if (currentCurrentSlot.mayPlace(slotItemStack)) {
+                    slotItemStack = currentCurrentSlot.safeInsert(slotItemStack);
+                    currentCurrentSlot.setChanged();
+                }
+
+                //Check if there are no items left
+                if (slotItemStack.isEmpty()) {
+                    break;
+                }
+            }
+
+            //Check Space in Hot-bar
+            if (!slotItemStack.isEmpty()) {
+                for (int i = minionSlotAmount; i < lastHotBarIndex; i++) {
+                    Slot currentCurrentSlot = getSlot(i);
+                    //Check if slot exist
+                    if (currentCurrentSlot == null) {
+                        break;
+                    }
+                    //Try to place Item into the Player Slot
+                    if (currentCurrentSlot.mayPlace(slotItemStack)) {
+                        slotItemStack = currentCurrentSlot.safeInsert(slotItemStack);
+                        currentCurrentSlot.setChanged();
+                    }
+
+                    //Check if there are no items left
+                    if (slotItemStack.isEmpty()) {
+                        break;
+                    }
+                }
+            }
+        } else {
+            //Handle Player Inventory Shift-Click
+            for (int i = 0; i < 4; i++) {
+                Slot currentCurrentSlot = getSlot(i);
+                //Check if slot exist
+                if (currentCurrentSlot == null) {
+                    break;
+                }
+
+                //Try to place Item into the Player Slot
+                if (currentCurrentSlot.mayPlace(slotItemStack)) {
+                    slotItemStack = currentCurrentSlot.safeInsert(slotItemStack);
+                    currentCurrentSlot.setChanged();
+                }
+            }
+        }
+
+        Slot slot = slots.get(pIndex);
+        slot.set(slotItemStack);
+        slot.setChanged();
+        return ItemStack.EMPTY;
     }
 }
