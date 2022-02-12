@@ -132,4 +132,15 @@ public class MinionMenu extends AbstractContainerMenu {
 
         return itemStack;
     }
+
+    public void collectAll() {
+        for (int i = 4; i < minionSlotAmount; i++) {
+            Slot minionSlot = slots.get(i);
+            ItemStack minionStack = minionSlot.getItem();
+            minionStack = moveToPlayerInventory(i, minionStack);
+
+            minionSlot.set(minionStack);
+            minionSlot.setChanged();
+        }
+    }
 }

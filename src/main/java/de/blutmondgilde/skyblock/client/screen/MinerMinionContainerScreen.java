@@ -3,6 +3,7 @@ package de.blutmondgilde.skyblock.client.screen;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import de.blutmondgilde.skyblock.Skyblock;
+import de.blutmondgilde.skyblock.client.screen.button.MinionCollectAllButton;
 import de.blutmondgilde.skyblock.client.screen.button.MinionLevelUpButton;
 import de.blutmondgilde.skyblock.container.MinionMenu;
 import net.minecraft.ChatFormatting;
@@ -22,6 +23,7 @@ public class MinerMinionContainerScreen extends AbstractContainerScreen<MinionMe
     private static final ResourceLocation background = new ResourceLocation(Skyblock.MOD_ID, "textures/gui/miner_gui.png");
     private int minionLevel = 1;
     private final MinionLevelUpButton levelUpButton;
+    private final MinionCollectAllButton collectAllButton;
     private Component levelMessage;
     private int levelMessageX, levelMessageY;
 
@@ -30,12 +32,14 @@ public class MinerMinionContainerScreen extends AbstractContainerScreen<MinionMe
         levelMessage = new TranslatableComponent("skyblock.gui.minion.level", pMenu.getMinerEntity().getMinionLevel()).withStyle(ChatFormatting.BLACK);
         imageHeight = 168;
         this.levelUpButton = new MinionLevelUpButton(pMenu.getMinerEntity(), pPlayerInventory, this);
+        this.collectAllButton = new MinionCollectAllButton(pMenu, this);
     }
 
     @Override
     protected void init() {
         super.init();
         addRenderableWidget(levelUpButton);
+        addRenderableWidget(collectAllButton);
         titleLabelX = font.width(title) / 2;
         titleLabelY = 5;
         levelMessageX = getGuiLeft() + font.width(title) / 2 + font.width(title);
@@ -44,6 +48,8 @@ public class MinerMinionContainerScreen extends AbstractContainerScreen<MinionMe
         inventoryLabelY = imageHeight - 95;
         this.levelUpButton.x = leftPos + imageWidth - levelUpButton.getWidth() - 16;
         this.levelUpButton.y = topPos + 20;
+        this.collectAllButton.x = levelUpButton.x;
+        this.collectAllButton.y = levelUpButton.y + 30;
     }
 
     @Override

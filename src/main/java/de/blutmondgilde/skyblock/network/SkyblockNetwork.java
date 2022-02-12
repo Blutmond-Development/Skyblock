@@ -1,6 +1,7 @@
 package de.blutmondgilde.skyblock.network;
 
 import de.blutmondgilde.skyblock.Skyblock;
+import de.blutmondgilde.skyblock.network.toserver.CollectMinionItems;
 import de.blutmondgilde.skyblock.network.toserver.RequestMinionLevelUp;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.NetworkRegistry;
@@ -18,6 +19,6 @@ public class SkyblockNetwork {
     public static void registerPackets() {
         int id = 1;
         getInstance().registerMessage(id++, RequestMinionLevelUp.class, RequestMinionLevelUp::toBytes, RequestMinionLevelUp::new, RequestMinionLevelUp::handle);
-
+        getInstance().registerMessage(id++, CollectMinionItems.class, CollectMinionItems::toBytes, CollectMinionItems::new, CollectMinionItems::handle);
     }
 }

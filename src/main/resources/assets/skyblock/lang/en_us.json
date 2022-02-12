@@ -19,5 +19,6 @@
   "skyblock.gui.minion.level.up.1": "required Items to upgrade to the next tier:",
   "skyblock.upgrade.material.missing": "You can't upgrade this minion! You're missing some material.",
   "skyblock.minion.level.up.max": "This minion is already on this maximum tier!",
-  "skyblock.minion.level.up.requirements": "%s of %s %s"
+  "skyblock.minion.level.up.requirements": "%s of %s %s",
+  "skyblock.gui.minion.collect.title": "Collect all Items"
 }

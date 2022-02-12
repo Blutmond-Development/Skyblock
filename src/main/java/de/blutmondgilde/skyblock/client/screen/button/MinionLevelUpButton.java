@@ -26,9 +26,6 @@ import java.util.List;
 public class MinionLevelUpButton extends Button {
     private static final ResourceLocation buttonImage = new ResourceLocation(Skyblock.MOD_ID, "textures/gui/level_up_button.png");
     private static final ResourceLocation buttonBg = new ResourceLocation(Skyblock.MOD_ID, "textures/gui/button_small.png");
-    private final MinionEntity minionEntity;
-    private final Screen parent;
-    private final Inventory playerInventory;
 
     public MinionLevelUpButton(MinionEntity minionEntity, Inventory playerInventory, Screen parent) {
         super(0, 0, 20, 20, new TextComponent(""), pButton -> {
@@ -53,10 +50,6 @@ public class MinionLevelUpButton extends Button {
 
             parent.renderTooltip(pPoseStack, toolTip, pMouseX, pMouseY);
         });
-
-        this.minionEntity = minionEntity;
-        this.parent = parent;
-        this.playerInventory = playerInventory;
     }
 
     @Override
