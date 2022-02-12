@@ -80,17 +80,7 @@ public class MinionMenu extends AbstractContainerMenu {
             //Handle Minion Inventory Shift-Click
             //Check Space in Inventory
             for (int i = lastHotBarIndex; i < lastInventoryIndex; i++) {
-                Slot currentCurrentSlot = getSlot(i);
-                //Check if slot exist
-                if (currentCurrentSlot == null) {
-                    break;
-                }
-                //Try to place Item into the Player Slot
-                if (currentCurrentSlot.mayPlace(slotItemStack)) {
-                    slotItemStack = currentCurrentSlot.safeInsert(slotItemStack);
-                    currentCurrentSlot.setChanged();
-                }
-
+                slotItemStack = moveToPlayerInventory(i, slotItemStack);
                 //Check if there are no items left
                 if (slotItemStack.isEmpty()) {
                     break;
@@ -100,17 +90,7 @@ public class MinionMenu extends AbstractContainerMenu {
             //Check Space in Hot-bar
             if (!slotItemStack.isEmpty()) {
                 for (int i = minionSlotAmount; i < lastHotBarIndex; i++) {
-                    Slot currentCurrentSlot = getSlot(i);
-                    //Check if slot exist
-                    if (currentCurrentSlot == null) {
-                        break;
-                    }
-                    //Try to place Item into the Player Slot
-                    if (currentCurrentSlot.mayPlace(slotItemStack)) {
-                        slotItemStack = currentCurrentSlot.safeInsert(slotItemStack);
-                        currentCurrentSlot.setChanged();
-                    }
-
+                    slotItemStack = moveToPlayerInventory(i, slotItemStack);
                     //Check if there are no items left
                     if (slotItemStack.isEmpty()) {
                         break;
@@ -138,5 +118,18 @@ public class MinionMenu extends AbstractContainerMenu {
         slot.set(slotItemStack);
         slot.setChanged();
         return ItemStack.EMPTY;
+    }
+
+    private ItemStack moveToPlayerInventory(int slotIndex, ItemStack itemStack) {
+        Slot currentCurrentSlot = getSlot(slotIndex);
+        //Check if slot exist
+        if (currentCurrentSlot == null) return itemStack;
+        //Try to place Item into the Player Slot
+        if (currentCurrentSlot.mayPlace(itemStack)) {
+            itemStack = currentCurrentSlot.safeInsert(itemStack);
+            currentCurrentSlot.setChanged();
+        }
+
+        return itemStack;
     }
 }
