@@ -168,34 +168,38 @@ public class MinionRecipeBuilder implements RecipeBuilder {
         private final ResourceLocation advancementId;
 
         @Override
-        public void serializeRecipeData(JsonObject pJson) {
+        public void serializeRecipeData(JsonObject rootObject) {
             if (!this.group.isEmpty()) {
-                pJson.addProperty("group", this.group);
+                rootObject.addProperty("group", this.group);
             }
 
-            JsonArray jsonarray = new JsonArray();
+            JsonArray craftingPattern = new JsonArray();
 
             for (String s : this.pattern) {
-                jsonarray.add(s);
+                craftingPattern.add(s);
             }
 
-            pJson.add("pattern", jsonarray);
-            JsonObject jsonobject = new JsonObject();
+            rootObject.add("pattern", craftingPattern);
+            JsonObject craftingKeyMap = new JsonObject();
 
             for (Map.Entry<Character, Ingredient> entry : this.key.entrySet()) {
-                jsonobject.add(String.valueOf(entry.getKey()), entry.getValue().toJson());
+                craftingKeyMap.add(String.valueOf(entry.getKey()), entry.getValue().toJson());
             }
 
-            pJson.add("key", jsonobject);
-            JsonObject jsonobject1 = new JsonObject();
-            jsonobject1.addProperty("item", Registry.ITEM.getKey(this.itemStack.getItem()).toString());
+            rootObject.add("key", craftingKeyMap);
+            JsonObject resultObject = new JsonObject();
+            resultObject.addProperty("type", "forge:nbt");
+            resultObject.addProperty("item", Registry.ITEM.getKey(this.itemStack.getItem()).toString());
             if (this.itemStack.getCount() > 1) {
-                jsonobject1.addProperty("count", this.itemStack.getCount());
+                resultObject.addProperty("count", this.itemStack.getCount());
             }
 
-            jsonobject1.addProperty("minion", EntityType.getKey(this.minionType).toString());
+            JsonObject resultNbtObject = new JsonObject();
+            resultNbtObject.addProperty("minion", EntityType.getKey(this.minionType).toString());
 
-            pJson.add("result", jsonobject1);
+            resultObject.add("nbt", resultNbtObject);
+
+            rootObject.add("result", resultObject);
         }
 
         @Override

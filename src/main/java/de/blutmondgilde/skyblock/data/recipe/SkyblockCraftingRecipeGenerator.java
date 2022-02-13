@@ -4,7 +4,7 @@ import de.blutmondgilde.skyblock.registry.SkyblockRegistries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
-import net.minecraftforge.common.Tags;
+import net.minecraft.tags.ItemTags;
 
 import java.util.function.Consumer;
 
@@ -17,7 +17,7 @@ public class SkyblockCraftingRecipeGenerator extends RecipeProvider {
 
     @Override
     protected void buildCraftingRecipes(Consumer<FinishedRecipe> consumer) {
-        MinionRecipeBuilder.miner(Tags.Items.ORES_COAL, SkyblockRegistries.entities.coalMiner.get()).save(consumer);
+        MinionRecipeBuilder.miner(ItemTags.COALS, SkyblockRegistries.entities.coalMiner.get()).save(consumer);
     }
 
     @Override

@@ -8,14 +8,17 @@
   ],
   "key": {
     "X": {
-      "tag": "forge:ores/coal"
+      "tag": "minecraft:coals"
     },
     "C": {
       "item": "minecraft:wooden_pickaxe"
     }
   },
   "result": {
+    "type": "forge:nbt",
     "item": "skyblock:picked_minion",
-    "minion": "skyblock:coal_miner"
+    "nbt": {
+      "minion": "skyblock:coal_miner"
+    }
   }
 }
