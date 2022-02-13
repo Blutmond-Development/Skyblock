@@ -20,5 +20,10 @@
   "skyblock.upgrade.material.missing": "You can't upgrade this minion! You're missing some material.",
   "skyblock.minion.level.up.max": "This minion is already on this maximum tier!",
   "skyblock.minion.level.up.requirements": "%s of %s %s",
-  "skyblock.gui.minion.collect.title": "Collect all Items"
+  "skyblock.gui.minion.collect.title": "Collect all Items",
+  "item.skyblock.picked_minion": "Picked Minion",
+  "item.skyblock.picked_minion.tooltip.notag": "This item has no minion information. It can't be used!",
+  "item.skyblock.picked_minion.tooltip.type": "Minion Type: %s",
+  "item.skyblock.picked_minion.tooltip.level": "Minion level: %s",
+  "skyblock.coal_miner": "Coal Miner"
 }
