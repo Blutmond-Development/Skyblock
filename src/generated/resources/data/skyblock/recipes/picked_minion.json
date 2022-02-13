@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "skyblock:minion",
+  "pattern": [
+    "XXX",
+    "XCX",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "tag": "forge:ores/coal"
+    },
+    "C": {
+      "item": "minecraft:wooden_pickaxe"
+    }
+  },
+  "result": {
+    "item": "skyblock:picked_minion",
+    "minion": "skyblock:coal_miner"
+  }
+}

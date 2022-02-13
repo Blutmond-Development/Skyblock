@@ -264,7 +264,6 @@ public abstract class MinionEntity extends Mob implements OwnableEntity, IAnimat
         if (this.ownerUUID == null) {
             die(DamageSource.OUT_OF_WORLD);
             markHurt();
-            return;
         }
     }
 

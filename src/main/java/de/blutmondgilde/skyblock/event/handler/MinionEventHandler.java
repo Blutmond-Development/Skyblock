@@ -2,12 +2,11 @@ package de.blutmondgilde.skyblock.event.handler;
 
 
 import de.blutmondgilde.skyblock.Skyblock;
-import de.blutmondgilde.skyblock.entity.minion.miner.MinerEntity;
-import de.blutmondgilde.skyblock.registry.SkyblockRegistries;
+import de.blutmondgilde.skyblock.entity.minion.MinionEntity;
+import de.blutmondgilde.skyblock.item.PickedMinionItem;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 
@@ -23,7 +22,7 @@ public class MinionEventHandler {
             e.setCanceled(true);
         }
 
-        if (!(e.getEntityLiving() instanceof MinerEntity miner)) return;
+        if (!(e.getEntityLiving() instanceof MinionEntity minion)) return;
 
         Entity sourceEntity = e.getSource().getEntity();
         if (!(sourceEntity instanceof Player)) {
@@ -31,13 +30,12 @@ public class MinionEventHandler {
         }
         if (!(sourceEntity instanceof Player player)) return;
 
-        if (miner.getOwnerUUID() == null) return;
-        if (!miner.getOwnerUUID().equals(sourceEntity.getUUID())) return;
-        if (!player.addItem(new ItemStack(SkyblockRegistries.items.minerSpawnEgg.get()))) {
-            ItemEntity itemEntity = new ItemEntity(player.level, player.getX(), player.getY(), player.getZ(), new ItemStack(SkyblockRegistries.items.minerSpawnEgg.get()));
+        if (minion.getOwnerUUID() == null) return;
+        if (!minion.getOwnerUUID().equals(sourceEntity.getUUID())) return;
+        if (!player.addItem(PickedMinionItem.createNew(minion))) {
+            ItemEntity itemEntity = new ItemEntity(player.level, player.getX(), player.getY(), player.getZ(), PickedMinionItem.createNew(minion));
             player.level.addFreshEntity(itemEntity);
         }
-        e.getEntityLiving().kill();
     }
 
     private static void onTakeItems(final MinionEvent.TakeItemStack e) {
