@@ -45,5 +45,11 @@
   "item.skyblock.compressed_gold_ingot": "Compressed Gold Ingot",
   "item.skyblock.compressed_redstone": "Compressed Redstone",
   "item.skyblock.compressed_diamond": "Compressed Diamond",
-  "item.skyblock.compressed_emerald": "Compressed Emerald"
+  "item.skyblock.compressed_emerald": "Compressed Emerald",
+  "fuel.skyblock.headline": "Fuel Info",
+  "fuel.skyblock.modifier": "Speed boost: %s",
+  "fuel.skyblock.duration": "Duration: %s",
+  "skyblock.text.ticks.in.hours": "%s:%s:%s Hours",
+  "skyblock.text.ticks.in.minutes": "%s:%s Minutes",
+  "skyblock.text.ticks.in.seconds": "%s Seconds"
 }

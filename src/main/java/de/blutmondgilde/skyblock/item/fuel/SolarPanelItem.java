@@ -20,4 +20,9 @@ public class SolarPanelItem extends Item implements MinionFuelItem {
     public float getEfficiency(ItemStack stack, Level level) {
         return level.isDay() && !level.isRaining() ? 0.25F : 0F;
     }
+
+    @Override
+    public boolean isConsumable() {
+        return false;
+    }
 }

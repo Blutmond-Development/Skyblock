@@ -3,6 +3,9 @@ package de.blutmondgilde.skyblock.entity.minion;
 import de.blutmondgilde.skyblock.Skyblock;
 import de.blutmondgilde.skyblock.container.MinionInventory;
 import de.blutmondgilde.skyblock.container.MinionMenu;
+import de.blutmondgilde.skyblock.fuel.MinionFuel;
+import de.blutmondgilde.skyblock.registry.SkyblockRegistries;
+import de.blutmondgilde.skyblock.util.FuelTimer;
 import lombok.Getter;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
@@ -50,6 +53,8 @@ public abstract class MinionEntity extends Mob implements OwnableEntity, IAnimat
     protected UUID ownerUUID = null;
     @Getter
     protected final MinionInventory inventory;
+    @Getter
+    private final FuelTimer fuelTimer = new FuelTimer();
 
     public MinionEntity(EntityType<? extends MinionEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -259,6 +264,15 @@ public abstract class MinionEntity extends Mob implements OwnableEntity, IAnimat
             die(DamageSource.OUT_OF_WORLD);
             markHurt();
         }
+        if (this.inventory.hasFuelItem()) {
+            MinionFuel fuel = SkyblockRegistries.minionFuel.findByItem(this.inventory.getFuelSlotStack().getItem());
+            if (fuel != null) {
+                if (fuelTimer.setFuel(fuel, this.inventory.getFuelSlotStack(), this.level)) {
+                    this.inventory.consumeFuel();
+                }
+            }
+        }
+        this.fuelTimer.tick();
     }
 
     @Override
@@ -301,4 +315,6 @@ public abstract class MinionEntity extends Mob implements OwnableEntity, IAnimat
             inventory.setNewSize(getInventorySize());
         }
     }
+
+    //TODO fuel modifier
 }

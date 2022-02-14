@@ -87,4 +87,18 @@ public class MinionInventory extends ItemStackHandler {
         }
         return true;
     }
+
+    public boolean hasFuelItem() {
+        return !getFuelSlotStack().isEmpty();
+    }
+
+    public ItemStack getFuelSlotStack() {
+        return getStackInSlot(0);
+    }
+
+    public void consumeFuel() {
+        if(SkyblockRegistries.minionFuel.findByItem(this.getFuelSlotStack().getItem()).isConsumable()){
+            setStackInSlot(0, ItemStack.EMPTY);
+        }
+    }
 }

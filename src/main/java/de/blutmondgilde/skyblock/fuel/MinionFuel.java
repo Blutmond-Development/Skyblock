@@ -38,4 +38,8 @@ public abstract class MinionFuel implements IForgeRegistryEntry<MinionFuel> {
     public Class<MinionFuel> getRegistryType() {
         return MinionFuel.class;
     }
+
+    public boolean isConsumable() {
+        return true;
+    }
 }

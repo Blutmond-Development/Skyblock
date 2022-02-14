@@ -7,4 +7,8 @@ public interface MinionFuelItem {
     long getDurationTicks();
 
     float getEfficiency(ItemStack stack, Level level);
+
+    default boolean isConsumable() {
+        return true;
+    }
 }

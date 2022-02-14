@@ -24,6 +24,11 @@ public class MinionFuelWrapper extends MinionFuel {
         return fuelItem.getEfficiency(stack, level);
     }
 
+    @Override
+    public boolean isConsumable() {
+        return fuelItem.isConsumable();
+    }
+
     public static <T extends Item & MinionFuelItem> MinionFuelWrapper of(T item) {
         return new MinionFuelWrapper(() -> item);
     }

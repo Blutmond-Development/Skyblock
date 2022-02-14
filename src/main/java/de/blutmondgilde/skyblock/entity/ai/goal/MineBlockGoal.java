@@ -115,7 +115,7 @@ public class MineBlockGoal extends Goal {
     }
 
     public int getMiningDuration() {
-        return requiredBreakTicks;
+        return requiredBreakTicks - Math.round(requiredBreakTicks * mob.getFuelTimer().getCurrentModifier());
     }
 
     @Override

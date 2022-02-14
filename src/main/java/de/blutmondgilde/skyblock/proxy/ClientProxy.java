@@ -1,5 +1,6 @@
 package de.blutmondgilde.skyblock.proxy;
 
+import de.blutmondgilde.skyblock.client.event.handler.FuelToolTipHandler;
 import de.blutmondgilde.skyblock.client.renderer.MinerRenderer;
 import de.blutmondgilde.skyblock.client.screen.MinerMinionContainerScreen;
 import de.blutmondgilde.skyblock.registry.SkyblockRegistries;
@@ -13,6 +14,7 @@ public class ClientProxy extends CommonProxy {
     public ClientProxy() {
         super();
         modBus.addListener(this::registerEntityRenderers);
+        forgeBus.addListener(FuelToolTipHandler::onRenderToolTip);
     }
 
     @Override
