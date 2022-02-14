@@ -1,9 +1,12 @@
 package de.blutmondgilde.skyblock.item;
 
+import de.blutmondgilde.skyblock.client.renderer.PickedMinionItemRenderer;
 import de.blutmondgilde.skyblock.entity.minion.MinionEntity;
 import de.blutmondgilde.skyblock.registry.SkyblockRegistries;
 import de.blutmondgilde.skyblock.registry.SkyblockTabs;
+import lombok.Getter;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -19,13 +22,30 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.client.IItemRenderProperties;
+import software.bernie.geckolib3.core.AnimationState;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.network.GeckoLibNetwork;
+import software.bernie.geckolib3.network.ISyncable;
+import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.function.Consumer;
 
-public class PickedMinionItem extends Item {
+public class PickedMinionItem extends Item implements IAnimatable, ISyncable {
+    @Getter
+    public AnimationFactory factory = new AnimationFactory(this);
+
     public PickedMinionItem() {
         super(new Properties().stacksTo(1).tab(SkyblockTabs.MINIONS));
+        GeckoLibNetwork.registerSyncable(this);
     }
 
     @Override
@@ -94,5 +114,41 @@ public class PickedMinionItem extends Item {
     private boolean hasMinionTag(ItemStack itemStack) {
         if (!itemStack.hasTag()) return false;
         return itemStack.getTag().contains("minion");
+    }
+
+    private PlayState predicate(AnimationEvent<PickedMinionItem> event) {
+        AnimationController<PickedMinionItem> controller = event.getController();
+        controller.setAnimation(new AnimationBuilder().addAnimation("animation.miner.idle", true));
+        return PlayState.CONTINUE;
+    }
+
+    @Override
+    public void registerControllers(AnimationData data) {
+        data.addAnimationController(new AnimationController(this, "controller", 0, this::predicate));
+    }
+
+    @Override
+    public void onAnimationSync(int id, int state) {
+        if (state == 0) {
+            final AnimationController controller = GeckoLibUtil.getControllerForID(factory, id, "controller");
+
+            if (controller.getAnimationState() == AnimationState.Stopped) {
+                controller.markNeedsReload();
+                controller.setAnimation(new AnimationBuilder().addAnimation("animation.miner.idle", true));
+            }
+        }
+    }
+
+    @Override
+    public void initializeClient(Consumer<IItemRenderProperties> consumer) {
+        super.initializeClient(consumer);
+        consumer.accept(new IItemRenderProperties() {
+            private final BlockEntityWithoutLevelRenderer renderer = new PickedMinionItemRenderer();
+
+            @Override
+            public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
+                return renderer;
+            }
+        });
     }
 }
