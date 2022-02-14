@@ -4,7 +4,6 @@ import de.blutmondgilde.skyblock.Skyblock;
 import de.blutmondgilde.skyblock.container.MinionInventory;
 import de.blutmondgilde.skyblock.container.MinionMenu;
 import lombok.Getter;
-import lombok.Setter;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.nbt.CompoundTag;
@@ -15,8 +14,6 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.Container;
-import net.minecraft.world.ContainerListener;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.SimpleMenuProvider;
@@ -47,15 +44,12 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.UUID;
 
-public abstract class MinionEntity extends Mob implements OwnableEntity, IAnimatable, Npc, ContainerListener {
+public abstract class MinionEntity extends Mob implements OwnableEntity, IAnimatable, Npc {
     private static final EntityDataAccessor<Integer> LEVEL = SynchedEntityData.defineId(MinionEntity.class, EntityDataSerializers.INT);
     @Getter
     protected UUID ownerUUID = null;
     @Getter
     protected final MinionInventory inventory;
-    @Setter
-    @Getter
-    protected boolean inventoryFull = false;
 
     public MinionEntity(EntityType<? extends MinionEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -298,11 +292,6 @@ public abstract class MinionEntity extends Mob implements OwnableEntity, IAnimat
             NetworkHooks.openGui(serverPlayer, new SimpleMenuProvider((pContainerId, pInventory, pPlayer1) ->
                 new MinionMenu(pContainerId, pPlayer1.getInventory(), this), getCustomName()), buf -> buf.writeInt(getId()));
         }
-    }
-
-    @Override
-    public void containerChanged(Container pInvBasic) {
-        //???
     }
 
     @Override

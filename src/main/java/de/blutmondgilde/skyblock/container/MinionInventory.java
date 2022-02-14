@@ -8,9 +8,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class MinionInventory extends ItemStackHandler {
+    private final List<MinionInventoryListener> inventoryListeners = new ArrayList<>();
+
     public MinionInventory() {
         super(4);
     }
@@ -19,7 +23,15 @@ public class MinionInventory extends ItemStackHandler {
         super(4 + inventorySize);
     }
 
-    public void setNewSize(int inventorySize){
+    public void addListener(MinionInventoryListener listener) {
+        inventoryListeners.add(listener);
+    }
+
+    public void removeListener(MinionInventoryListener listener) {
+        inventoryListeners.remove(listener);
+    }
+
+    public void setNewSize(int inventorySize) {
         //Get current Items
         NonNullList<ItemStack> items = stacks;
         //Expand Size
@@ -58,5 +70,21 @@ public class MinionInventory extends ItemStackHandler {
         }
 
         return super.getStackLimit(slot, stack);
+    }
+
+    @Override
+    protected void onContentsChanged(int slot) {
+        super.onContentsChanged(slot);
+        inventoryListeners.forEach(listener -> listener.onInventoryChanged(this));
+    }
+
+    public boolean isFull() {
+        for (int i = 4; i < getSlots(); i++) {
+            ItemStack stackInSlot = getStackInSlot(i);
+            if (stackInSlot.isEmpty()) return false;
+            int maxStackSize = getSlotLimit(i);
+            if (stackInSlot.getCount() < maxStackSize) return false;
+        }
+        return true;
     }
 }

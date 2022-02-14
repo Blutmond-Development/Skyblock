@@ -12,7 +12,6 @@ import net.minecraftforge.common.Tags;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MineBlockGoal extends Goal {
     private final Tags.IOptionalNamedTag<Block> targetBlock;
@@ -32,7 +31,7 @@ public class MineBlockGoal extends Goal {
     @Override
     public boolean canUse() {
         //Check if Inventory is full
-        if (mob.isInventoryFull()) return false;
+        if (mob.getInventory().isFull()) return false;
         //Check if target block is valid
         if (!targetPos.equals(BlockPos.ZERO)) return false;
         //Find next target
@@ -81,7 +80,6 @@ public class MineBlockGoal extends Goal {
             if (mob.level instanceof ServerLevel level) {
                 //Get Block drops
                 List<ItemStack> drops = Block.getDrops(mob.level.getBlockState(targetPos), level, this.targetPos, null, this.mob, new ItemStack(Items.NETHERITE_PICKAXE));
-                AtomicBoolean hasAddedItem = new AtomicBoolean(false);
                 //Try to add each drop to the inventory
                 drops.forEach(itemStack -> {
                     ItemStack remainingItems = itemStack.copy();
@@ -93,20 +91,16 @@ public class MineBlockGoal extends Goal {
                             ItemStack notAddedItems = mob.getInventory().insertItem(i, remainingItems, false);
                             //Check if any item has been added
                             if (notAddedItems.getCount() != remainingItems.getCount()) {
-                                hasAddedItem.set(true);
                                 //update remaining items
                                 remainingItems = notAddedItems;
                             }
                         } else {
                             //Add all items into the
                             mob.getInventory().insertItem(i, remainingItems, false);
-                            hasAddedItem.set(true);
                             break;
                         }
                     }
                 });
-
-                this.mob.setInventoryFull(!hasAddedItem.get());
                 mob.setBreaking(false);
 
             }
