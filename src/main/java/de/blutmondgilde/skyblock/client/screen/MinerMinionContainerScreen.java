@@ -1,16 +1,21 @@
 package de.blutmondgilde.skyblock.client.screen;
 
+import com.google.common.collect.Lists;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import de.blutmondgilde.skyblock.Skyblock;
 import de.blutmondgilde.skyblock.client.screen.button.MinionCollectAllButton;
 import de.blutmondgilde.skyblock.client.screen.button.MinionLevelUpButton;
 import de.blutmondgilde.skyblock.container.MinionMenu;
+import de.blutmondgilde.skyblock.registry.SkyblockRegistries;
+import de.blutmondgilde.skyblock.util.FuelTimer;
+import de.blutmondgilde.skyblock.util.MessageUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -18,14 +23,20 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraftforge.client.gui.GuiUtils;
 
 import java.awt.Color;
+import java.util.List;
+import java.util.Optional;
 
 public class MinerMinionContainerScreen extends AbstractContainerScreen<MinionMenu> {
+    private static final Color headline_color = new Color(75, 75, 75);
+    private static final Color text_color = new Color(140, 140, 140);
+    private static final Style text_style = Style.EMPTY.withColor(text_color.getRGB());
     private static final ResourceLocation background = new ResourceLocation(Skyblock.MOD_ID, "textures/gui/miner_gui.png");
     private int minionLevel = 1;
     private final MinionLevelUpButton levelUpButton;
     private final MinionCollectAllButton collectAllButton;
     private Component levelMessage;
     private int levelMessageX, levelMessageY;
+    private int fuelSlotX, fuelSlotY;
 
     public MinerMinionContainerScreen(MinionMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
@@ -50,6 +61,8 @@ public class MinerMinionContainerScreen extends AbstractContainerScreen<MinionMe
         this.levelUpButton.y = topPos + 20;
         this.collectAllButton.x = levelUpButton.x;
         this.collectAllButton.y = levelUpButton.y + 30;
+        this.fuelSlotX = getGuiLeft() + 7;
+        this.fuelSlotY = getGuiTop() + 1;
     }
 
     @Override
@@ -58,6 +71,48 @@ public class MinerMinionContainerScreen extends AbstractContainerScreen<MinionMe
         super.render(pPoseStack, pMouseX, pMouseY, pPartialTick);
         font.draw(pPoseStack, levelMessage, levelMessageX, levelMessageY, Color.WHITE.getRGB());
         renderTooltip(pPoseStack, pMouseX, pMouseY);
+    }
+
+    @Override
+    protected void renderTooltip(PoseStack pPoseStack, int pX, int pY) {
+        if (pX >= fuelSlotX && pX <= fuelSlotX + 17) {
+            if (pY >= fuelSlotY && pY <= fuelSlotY + 17) {
+                FuelTimer fuelTimer = menu.getMinerEntity().getFuelTimer();
+                if (fuelTimer.hasFuel()) {
+                    //Add Fuel info to itemStack info
+                    if (this.menu.getCarried().isEmpty() && this.hoveredSlot != null && this.hoveredSlot.hasItem()) {
+                        List<Component> toolTipList = Lists.newArrayList(this.hoveredSlot.getItem().getHoverName());
+
+                        Optional.ofNullable(SkyblockRegistries.minionFuel.findByItem(hoveredSlot.getItem().getItem())).ifPresent(fuel -> {
+                            toolTipList.add(new TranslatableComponent("fuel.skyblock.headline").withStyle(Style.EMPTY.withBold(true).withColor(headline_color.getRGB())));
+                            toolTipList.add(new TranslatableComponent("fuel.skyblock.modifier",
+                                MessageUtils.floatToPercent(fuel.getEfficiencyBoost(hoveredSlot.getItem(), Skyblock.getProxy().getLevel())) + "%").withStyle(text_style));
+                            toolTipList.add(new TranslatableComponent("fuel.skyblock.duration",
+                                MessageUtils.formatTicksToDuration(fuel.getDurationTicks())).withStyle(text_style));
+                        });
+
+                        if (!toolTipList.isEmpty()) {
+                            toolTipList.add(new TextComponent(" "));
+                        }
+                        toolTipList.add(new TranslatableComponent("skyblock.gui.minion.fuel.title", fuelTimer.getLastFuel()).withStyle(text_style));
+                        toolTipList.add(new TranslatableComponent("fuel.skyblock.modifier", MessageUtils.floatToPercent(fuelTimer.getCurrentModifier()) + "%").withStyle(text_style));
+                        toolTipList.add(new TranslatableComponent("fuel.skyblock.duration", MessageUtils.formatTicksToDuration(fuelTimer.getRemainingTicks())).withStyle(text_style));
+
+                        renderTooltip(pPoseStack, toolTipList, this.hoveredSlot.getItem().getTooltipImage(), pX, pY);
+                        return;
+                    } else {
+                        //render Fuel Info
+                        renderTooltip(pPoseStack, List.of(
+                            new TranslatableComponent("skyblock.gui.minion.fuel.title", fuelTimer.getLastFuel()).withStyle(text_style),
+                            new TranslatableComponent("fuel.skyblock.modifier", MessageUtils.floatToPercent(fuelTimer.getCurrentModifier()) + "%").withStyle(text_style),
+                            new TranslatableComponent("fuel.skyblock.duration", MessageUtils.formatTicksToDuration(fuelTimer.getRemainingTicks())).withStyle(text_style)
+                        ), Optional.empty(), pX, pY);
+                        return;
+                    }
+                }
+            }
+        }
+        super.renderTooltip(pPoseStack, pX, pY);
     }
 
     @Override

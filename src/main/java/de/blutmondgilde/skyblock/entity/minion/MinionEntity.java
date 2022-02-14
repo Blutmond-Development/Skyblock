@@ -49,12 +49,11 @@ import java.util.UUID;
 
 public abstract class MinionEntity extends Mob implements OwnableEntity, IAnimatable, Npc {
     private static final EntityDataAccessor<Integer> LEVEL = SynchedEntityData.defineId(MinionEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<CompoundTag> FUEL_TIMER = SynchedEntityData.defineId(MinionEntity.class, EntityDataSerializers.COMPOUND_TAG);
     @Getter
     protected UUID ownerUUID = null;
     @Getter
     protected final MinionInventory inventory;
-    @Getter
-    private final FuelTimer fuelTimer = new FuelTimer();
 
     public MinionEntity(EntityType<? extends MinionEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -84,6 +83,7 @@ public abstract class MinionEntity extends Mob implements OwnableEntity, IAnimat
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(LEVEL, 1);
+        this.entityData.define(FUEL_TIMER, new FuelTimer().serializeNBT());
     }
 
     /**
@@ -216,6 +216,12 @@ public abstract class MinionEntity extends Mob implements OwnableEntity, IAnimat
         return entityData.get(LEVEL);
     }
 
+    public FuelTimer getFuelTimer() {
+        FuelTimer fuelTimer = new FuelTimer();
+        fuelTimer.deserializeNBT(entityData.get(FUEL_TIMER));
+        return fuelTimer;
+    }
+
     public void levelUp(Inventory inventory) {
         if (canLevelUp(inventory, true)) {
             canLevelUp(inventory, false);
@@ -260,19 +266,25 @@ public abstract class MinionEntity extends Mob implements OwnableEntity, IAnimat
     @Override
     public void tick() {
         super.tick();
+
         if (this.ownerUUID == null) {
             die(DamageSource.OUT_OF_WORLD);
             markHurt();
         }
+
+        FuelTimer fuelTimer = getFuelTimer();
         if (this.inventory.hasFuelItem()) {
             MinionFuel fuel = SkyblockRegistries.minionFuel.findByItem(this.inventory.getFuelSlotStack().getItem());
             if (fuel != null) {
                 if (fuelTimer.setFuel(fuel, this.inventory.getFuelSlotStack(), this.level)) {
+                    entityData.set(FUEL_TIMER, fuelTimer.serializeNBT());
                     this.inventory.consumeFuel();
                 }
             }
         }
-        this.fuelTimer.tick();
+
+        fuelTimer.tick();
+        entityData.set(FUEL_TIMER, fuelTimer.serializeNBT());
     }
 
     @Override
@@ -281,6 +293,7 @@ public abstract class MinionEntity extends Mob implements OwnableEntity, IAnimat
         pCompound.putUUID("owner", this.ownerUUID);
         pCompound.putInt("level", this.entityData.get(LEVEL));
         pCompound.put("inventory", this.inventory.serializeNBT());
+        pCompound.put("fueltimer", this.getFuelTimer().serializeNBT());
     }
 
     @Override
@@ -289,6 +302,7 @@ public abstract class MinionEntity extends Mob implements OwnableEntity, IAnimat
         this.ownerUUID = pCompound.getUUID("owner");
         this.entityData.set(LEVEL, pCompound.getInt("level"));
         this.inventory.deserializeNBT(pCompound.getCompound("inventory"));
+        this.entityData.set(FUEL_TIMER, pCompound.getCompound("fueltimer"));
     }
 
     @Override

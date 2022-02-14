@@ -40,8 +40,10 @@ public class MinionCollectAllButton extends Button {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
         RenderSystem.setShaderTexture(0, buttonBg);
+        RenderSystem.enableDepthTest();
 
         blit(pPoseStack, x, y, 0, isHoveredOrFocused() ? 20 : 0, 20, 20, 20, 40);
+        RenderSystem.disableDepthTest();
 
         if (chestIcon == null) {
             chestIcon = new ItemStack(Items.CHEST);

@@ -51,5 +51,7 @@
   "fuel.skyblock.duration": "Duration: %s",
   "skyblock.text.ticks.in.hours": "%s:%s:%s Hours",
   "skyblock.text.ticks.in.minutes": "%s:%s Minutes",
-  "skyblock.text.ticks.in.seconds": "%s Seconds"
+  "skyblock.text.ticks.in.seconds": "%s Seconds",
+  "skyblock.gui.minion.fuel.title": "Current Fuel: %s",
+  "skyblock.gui.minion.fuel.none": "none"
 }
