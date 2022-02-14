@@ -14,8 +14,8 @@ import net.minecraftforge.common.Tags;
 import java.util.Map;
 import java.util.function.Supplier;
 
-public class LapisLazuliMinerEntity extends MinerEntity {
-    public LapisLazuliMinerEntity(EntityType<LapisLazuliMinerEntity> pEntityType, Level pLevel) {
+public class LapisMinerEntity extends MinerEntity {
+    public LapisMinerEntity(EntityType<LapisMinerEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
 
@@ -35,8 +35,8 @@ public class LapisLazuliMinerEntity extends MinerEntity {
             case 7 -> Map.of(SkyblockRegistries.items.compressedLapisLazuli.get(), 128);
             case 8 -> Map.of(SkyblockRegistries.items.compressedLapisLazuli.get(), 256);
             case 9 -> Map.of(SkyblockRegistries.items.compressedLapisLazuli.get(), 512);
-            case 10 -> Map.of(SkyblockRegistries.items.compressedLapisLazuliBlock.get(), 8);
-            case 11 -> Map.of(SkyblockRegistries.items.compressedLapisLazuliBlock.get(), 16, SkyblockRegistries.items.instructionsOfTheMaster.get(), 1);
+            case 10 -> Map.of(SkyblockRegistries.items.compressedLapisBlock.get(), 8);
+            case 11 -> Map.of(SkyblockRegistries.items.compressedLapisBlock.get(), 16, SkyblockRegistries.items.instructionsOfTheMaster.get(), 1);
             default -> Map.of();
         };
     }

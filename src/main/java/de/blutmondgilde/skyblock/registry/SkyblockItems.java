@@ -31,8 +31,8 @@ public class SkyblockItems extends AbstractSkyblockRegistry {
     public final RegistryObject<CompressedItem> compressedEmerald = registry.register("compressed_emerald", CompressedItem::new);
     public final RegistryObject<CompressedBlockItem> compressedCopperBlock =
         registry.register("compressed_copper_block", () -> new CompressedBlockItem(SkyblockRegistries.blocks.compressedCopperBlock.get()));
-    public final RegistryObject<CompressedBlockItem> compressedLapisLazuliBlock =
-        registry.register("compressed_lapis_block", () -> new CompressedBlockItem(SkyblockRegistries.blocks.compressedLapisLazuliBlock.get()));
+    public final RegistryObject<CompressedBlockItem> compressedLapisBlock =
+        registry.register("compressed_lapis_block", () -> new CompressedBlockItem(SkyblockRegistries.blocks.compressedLapisBlock.get()));
     public final RegistryObject<CompressedBlockItem> compressedIronBlock =
         registry.register("compressed_iron_block", () -> new CompressedBlockItem(SkyblockRegistries.blocks.compressedIronBlock.get()));
     public final RegistryObject<CompressedBlockItem> compressedGoldBlock =

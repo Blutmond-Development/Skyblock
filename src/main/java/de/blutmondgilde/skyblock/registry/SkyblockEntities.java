@@ -7,7 +7,7 @@ import de.blutmondgilde.skyblock.entity.minion.miner.DiamondMinerEntity;
 import de.blutmondgilde.skyblock.entity.minion.miner.EmeraldMinerEntity;
 import de.blutmondgilde.skyblock.entity.minion.miner.GoldMinerEntity;
 import de.blutmondgilde.skyblock.entity.minion.miner.IronMinerEntity;
-import de.blutmondgilde.skyblock.entity.minion.miner.LapisLazuliMinerEntity;
+import de.blutmondgilde.skyblock.entity.minion.miner.LapisMinerEntity;
 import de.blutmondgilde.skyblock.entity.minion.miner.RedstoneMinerEntity;
 import de.blutmondgilde.skyblock.util.SkyblockResourceLocation;
 import net.minecraft.world.entity.EntityType;
@@ -21,7 +21,7 @@ public class SkyblockEntities extends AbstractSkyblockRegistry {
     private final DeferredRegister<EntityType<?>> registry = create(ForgeRegistries.ENTITIES);
     public final RegistryObject<EntityType<CoalMinerEntity>> coalMiner = minion("coal_miner", CoalMinerEntity::new);
     public final RegistryObject<EntityType<CopperMinerEntity>> copperMiner = minion("copper_miner", CopperMinerEntity::new);
-    public final RegistryObject<EntityType<LapisLazuliMinerEntity>> lapisMiner = minion("lapis_miner", LapisLazuliMinerEntity::new);
+    public final RegistryObject<EntityType<LapisMinerEntity>> lapisMiner = minion("lapis_miner", LapisMinerEntity::new);
     public final RegistryObject<EntityType<IronMinerEntity>> ironMiner = minion("iron_miner", IronMinerEntity::new);
     public final RegistryObject<EntityType<GoldMinerEntity>> goldMiner = minion("gold_miner", GoldMinerEntity::new);
     public final RegistryObject<EntityType<RedstoneMinerEntity>> redstoneMiner = minion("redstone_miner", RedstoneMinerEntity::new);

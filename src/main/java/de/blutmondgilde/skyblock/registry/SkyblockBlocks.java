@@ -13,7 +13,7 @@ public class SkyblockBlocks extends AbstractSkyblockRegistry {
     private final DeferredRegister<Block> registry = create(ForgeRegistries.BLOCKS);
     public final RegistryObject<EfficientCoalBlock> efficientCoalBlock = registry.register("efficient_coal_block", EfficientCoalBlock::new);
     public final RegistryObject<CompressedBlock> compressedCopperBlock = registry.register("compressed_copper_block", () -> new CompressedBlock(Blocks.COPPER_BLOCK));
-    public final RegistryObject<CompressedBlock> compressedLapisLazuliBlock = registry.register("compressed_lapis_block", () -> new CompressedBlock(Blocks.LAPIS_BLOCK));
+    public final RegistryObject<CompressedBlock> compressedLapisBlock = registry.register("compressed_lapis_block", () -> new CompressedBlock(Blocks.LAPIS_BLOCK));
     public final RegistryObject<CompressedBlock> compressedIronBlock = registry.register("compressed_iron_block", () -> new CompressedBlock(Blocks.IRON_BLOCK));
     public final RegistryObject<CompressedBlock> compressedGoldBlock = registry.register("compressed_gold_block", () -> new CompressedBlock(Blocks.GOLD_BLOCK));
     public final RegistryObject<CompressedBlock> compressedRedstoneBlock = registry.register("compressed_redstone_block", () -> new CompressedBlock(Blocks.REDSTONE_BLOCK));
