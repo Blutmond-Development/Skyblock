@@ -10,7 +10,7 @@ public class EfficientCharCoalItem extends Item implements MinionFuelItem {
     private static final long duration = 36 * 60 * 60 * 20;
 
     public EfficientCharCoalItem() {
-        super((new Properties()).tab(SkyblockTabs.MINION_UPGRADES));
+        super((new Properties()).tab(SkyblockTabs.GENERAL));
     }
 
     @Override

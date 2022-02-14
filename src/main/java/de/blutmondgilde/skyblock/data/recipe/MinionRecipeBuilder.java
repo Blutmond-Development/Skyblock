@@ -37,6 +37,7 @@ import java.util.function.Consumer;
 
 @RequiredArgsConstructor
 public class MinionRecipeBuilder implements RecipeBuilder {
+    private final String name;
     private final ItemStack result;
     private final EntityType<? extends MinionEntity> minionType;
     private String group;
@@ -44,8 +45,8 @@ public class MinionRecipeBuilder implements RecipeBuilder {
     private final List<String> rows = Lists.newArrayList();
     private final Map<Character, Ingredient> key = Maps.newLinkedHashMap();
 
-    public static MinionRecipeBuilder miner(Tag<Item> material, EntityType<? extends MinionEntity> minionType) {
-        return new MinionRecipeBuilder(new ItemStack(SkyblockRegistries.items.pickedMinion.get()), minionType)
+    public static MinionRecipeBuilder miner(String name, Tag<Item> material, EntityType<? extends MinionEntity> minionType) {
+        return new MinionRecipeBuilder(name, new ItemStack(SkyblockRegistries.items.pickedMinion.get()), minionType)
             .pattern("XXX")
             .pattern("XCX")
             .pattern("XXX")
@@ -116,6 +117,8 @@ public class MinionRecipeBuilder implements RecipeBuilder {
 
     @Override
     public void save(Consumer<FinishedRecipe> pFinishedRecipeConsumer, ResourceLocation pRecipeId) {
+        //Apply name to id
+        pRecipeId = new ResourceLocation(pRecipeId.getNamespace(), pRecipeId.getPath() + "_" + this.name);
         ensureValid(pRecipeId);
         this.advancement.parent(new ResourceLocation("recipes/root"))
             .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(pRecipeId))

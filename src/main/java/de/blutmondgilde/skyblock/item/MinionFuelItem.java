@@ -29,7 +29,7 @@ public class MinionFuelItem extends Item {
     private final ItemRarity rarity;
 
     public MinionFuelItem(int maxDuration, float modifier, ItemRarity rarity) {
-        super(new Properties().tab(SkyblockTabs.MINION_UPGRADES));
+        super(new Properties().tab(SkyblockTabs.GENERAL));
         this.modifier = modifier;
         this.maxDuration = maxDuration;
         this.rarity = rarity;

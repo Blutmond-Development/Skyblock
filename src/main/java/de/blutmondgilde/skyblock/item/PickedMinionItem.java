@@ -44,7 +44,7 @@ public class PickedMinionItem extends Item implements IAnimatable, ISyncable {
     public AnimationFactory factory = new AnimationFactory(this);
 
     public PickedMinionItem() {
-        super(new Properties().stacksTo(1).tab(SkyblockTabs.MINIONS));
+        super(new Properties().stacksTo(1).tab(SkyblockTabs.GENERAL));
         GeckoLibNetwork.registerSyncable(this);
     }
 

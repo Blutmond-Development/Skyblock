@@ -6,6 +6,6 @@ import net.minecraft.world.item.BlockItem;
 
 public class EfficientCoalBlockItem extends BlockItem {
     public EfficientCoalBlockItem() {
-        super(SkyblockRegistries.blocks.efficientCoalBlock.get(), new Properties().tab(SkyblockTabs.MINION_UPGRADES));
+        super(SkyblockRegistries.blocks.efficientCoalBlock.get(), new Properties().tab(SkyblockTabs.GENERAL));
     }
 }

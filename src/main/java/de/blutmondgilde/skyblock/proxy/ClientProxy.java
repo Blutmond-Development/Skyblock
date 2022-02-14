@@ -22,6 +22,7 @@ public class ClientProxy extends CommonProxy {
 
     private void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers e) {
         e.registerEntityRenderer(SkyblockRegistries.entities.coalMiner.get(), MinerRenderer::new);
+        e.registerEntityRenderer(SkyblockRegistries.entities.copperMiner.get(), MinerRenderer::new);
     }
 
     @Override

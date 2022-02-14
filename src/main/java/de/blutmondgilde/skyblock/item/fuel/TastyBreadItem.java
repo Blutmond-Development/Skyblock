@@ -11,7 +11,7 @@ public class TastyBreadItem extends Item implements MinionFuelItem {
     private static final long duration = 12 * 60 * 60 * 20;
 
     public TastyBreadItem() {
-        super((new Item.Properties()).tab(SkyblockTabs.MINION_UPGRADES).food(Foods.BREAD));
+        super((new Item.Properties()).tab(SkyblockTabs.GENERAL).food(Foods.BREAD));
     }
 
     @Override

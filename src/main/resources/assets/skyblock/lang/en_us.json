@@ -1,9 +1,8 @@
 {
   "skyblock.entity.miner": "%s's %s Minion",
   "skyblock.container.miner": "%s - Level %s",
-  "itemGroup.skyblock.minions": "Skyblock - Minions",
-  "itemGroup.skyblock.upgrades": "Skyblock - Minion Upgrades",
-  "item.skyblock.miner_spawn_egg": "Miner Summoner Stone",
+  "itemGroup.skyblock.minions": "Skyblock - General",
+  "item.skyblock.miner_spawn_egg": "Miner Spawning Egg",
   "skyblock.text.time.minute": "%s minute",
   "skyblock.text.time.minutes": "%s minutes",
   "skyblock.text.time.hour": "%s hour",

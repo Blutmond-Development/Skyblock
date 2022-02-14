@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "skyblock:picked_minion"
+      "skyblock:picked_minion_coal"
     ]
   },
   "criteria": {
@@ -24,7 +24,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "skyblock:picked_minion"
+        "recipe": "skyblock:picked_minion_coal"
       }
     }
   },

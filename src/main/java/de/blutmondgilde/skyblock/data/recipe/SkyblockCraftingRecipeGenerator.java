@@ -5,6 +5,7 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.tags.ItemTags;
+import net.minecraftforge.common.Tags;
 
 import java.util.function.Consumer;
 
@@ -17,7 +18,8 @@ public class SkyblockCraftingRecipeGenerator extends RecipeProvider {
 
     @Override
     protected void buildCraftingRecipes(Consumer<FinishedRecipe> consumer) {
-        MinionRecipeBuilder.miner(ItemTags.COALS, SkyblockRegistries.entities.coalMiner.get()).save(consumer);
+        MinionRecipeBuilder.miner("coal", ItemTags.COALS, SkyblockRegistries.entities.coalMiner.get()).save(consumer);
+        MinionRecipeBuilder.miner("copper", Tags.Items.INGOTS_COPPER, SkyblockRegistries.entities.copperMiner.get()).save(consumer);
     }
 
     @Override

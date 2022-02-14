@@ -44,5 +44,6 @@ public abstract class CommonProxy {
 
     protected void addEntityAttributes(EntityAttributeCreationEvent e) {
         e.put(SkyblockRegistries.entities.coalMiner.get(), MinerEntity.setCustomAttributes().build());
+        e.put(SkyblockRegistries.entities.copperMiner.get(), MinerEntity.setCustomAttributes().build());
     }
 }

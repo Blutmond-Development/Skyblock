@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "skyblock:minion",
+  "pattern": [
+    "XXX",
+    "XCX",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "tag": "forge:ingots/copper"
+    },
+    "C": {
+      "item": "minecraft:wooden_pickaxe"
+    }
+  },
+  "result": {
+    "type": "forge:nbt",
+    "item": "skyblock:picked_minion",
+    "nbt": {
+      "minion": "skyblock:copper_miner"
+    }
+  }
+}

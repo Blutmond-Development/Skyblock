@@ -8,7 +8,7 @@ import net.minecraft.world.level.Level;
 
 public class SolarPanelItem extends Item implements MinionFuelItem {
     public SolarPanelItem() {
-        super((new Item.Properties()).tab(SkyblockTabs.MINION_UPGRADES));
+        super((new Item.Properties()).tab(SkyblockTabs.GENERAL));
     }
 
     @Override
