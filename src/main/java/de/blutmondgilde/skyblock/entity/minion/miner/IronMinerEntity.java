@@ -35,8 +35,8 @@ public class IronMinerEntity extends MinerEntity {
             case 7 -> Map.of(SkyblockRegistries.items.compressedIronIngot.get(), 128);
             case 8 -> Map.of(SkyblockRegistries.items.compressedIronIngot.get(), 256);
             case 9 -> Map.of(SkyblockRegistries.items.compressedIronIngot.get(), 512);
-            case 10 -> Map.of(SkyblockRegistries.items.compressedCopperBlock.get(), 8);
-            case 11 -> Map.of(SkyblockRegistries.items.compressedCopperBlock.get(), 16, SkyblockRegistries.items.instructionsOfTheMaster.get(), 1);
+            case 10 -> Map.of(SkyblockRegistries.items.compressedIronBlock.get(), 8);
+            case 11 -> Map.of(SkyblockRegistries.items.compressedIronBlock.get(), 16, SkyblockRegistries.items.instructionsOfTheMaster.get(), 1);
             default -> Map.of();
         };
     }
