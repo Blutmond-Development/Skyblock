@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+    "tag": "skyblock:raw_materials/mithril"
+  },
+  "result": "skyblock:mithril_ingot",
+  "experience": 0.7,
+  "cookingtime": 100
+}

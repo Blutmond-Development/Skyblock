@@ -1,0 +1,37 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "skyblock:picked_minion_end_stone"
+    ]
+  },
+  "criteria": {
+    "minion_unlock": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:end_stones"
+          },
+          {
+            "items": [
+              "minecraft:wooden_pickaxe"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "skyblock:picked_minion_end_stone"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "minion_unlock",
+      "has_the_recipe"
+    ]
+  ]
+}

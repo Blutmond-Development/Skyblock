@@ -24,13 +24,23 @@ public class ClientProxy extends CommonProxy {
 
     private void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers e) {
         e.registerEntityRenderer(SkyblockRegistries.entities.coalMiner.get(), MinerRenderer::new);
+        e.registerEntityRenderer(SkyblockRegistries.entities.cobblestoneMiner.get(), MinerRenderer::new);
         e.registerEntityRenderer(SkyblockRegistries.entities.copperMiner.get(), MinerRenderer::new);
-        e.registerEntityRenderer(SkyblockRegistries.entities.lapisMiner.get(), MinerRenderer::new);
-        e.registerEntityRenderer(SkyblockRegistries.entities.ironMiner.get(), MinerRenderer::new);
-        e.registerEntityRenderer(SkyblockRegistries.entities.goldMiner.get(), MinerRenderer::new);
-        e.registerEntityRenderer(SkyblockRegistries.entities.redstoneMiner.get(), MinerRenderer::new);
         e.registerEntityRenderer(SkyblockRegistries.entities.diamondMiner.get(), MinerRenderer::new);
         e.registerEntityRenderer(SkyblockRegistries.entities.emeraldMiner.get(), MinerRenderer::new);
+        e.registerEntityRenderer(SkyblockRegistries.entities.endStoneMiner.get(), MinerRenderer::new);
+        e.registerEntityRenderer(SkyblockRegistries.entities.glowstoneMiner.get(), MinerRenderer::new);
+        e.registerEntityRenderer(SkyblockRegistries.entities.goldMiner.get(), MinerRenderer::new);
+        e.registerEntityRenderer(SkyblockRegistries.entities.gravelMiner.get(), MinerRenderer::new);
+        e.registerEntityRenderer(SkyblockRegistries.entities.hardStoneMiner.get(), MinerRenderer::new);
+        e.registerEntityRenderer(SkyblockRegistries.entities.iceMiner.get(), MinerRenderer::new);
+        e.registerEntityRenderer(SkyblockRegistries.entities.ironMiner.get(), MinerRenderer::new);
+        e.registerEntityRenderer(SkyblockRegistries.entities.lapisMiner.get(), MinerRenderer::new);
+        e.registerEntityRenderer(SkyblockRegistries.entities.mithrilMiner.get(), MinerRenderer::new);
+        e.registerEntityRenderer(SkyblockRegistries.entities.obsidianMiner.get(), MinerRenderer::new);
+        e.registerEntityRenderer(SkyblockRegistries.entities.quartzMiner.get(), MinerRenderer::new);
+        e.registerEntityRenderer(SkyblockRegistries.entities.redstoneMiner.get(), MinerRenderer::new);
+        e.registerEntityRenderer(SkyblockRegistries.entities.sandMiner.get(), MinerRenderer::new);
     }
 
     @Override

@@ -97,50 +97,53 @@ public abstract class MinionEntity extends Mob implements OwnableEntity, IAnimat
             return false;
         }
 
-        InvWrapper wrapper = new InvWrapper(inventory);
-        Map<Integer, ItemStack> updatedSlots = new TreeMap<>();
+        if (!inventory.player.isCreative()) {
+            //Remove Items from Player Inventory
+            InvWrapper wrapper = new InvWrapper(inventory);
+            Map<Integer, ItemStack> updatedSlots = new TreeMap<>();
 
-        for (Map.Entry<Item, Integer> entry : getItemsForLevelUp().entrySet()) {
-            Item item = entry.getKey();
-            int remainingItems = entry.getValue();
+            for (Map.Entry<Item, Integer> entry : getItemsForLevelUp().entrySet()) {
+                Item item = entry.getKey();
+                int remainingItems = entry.getValue();
 
-            for (int i = 0; i < wrapper.getSlots() && remainingItems > 0; i++) {
-                if (wrapper.getStackInSlot(i).getItem().equals(item)) {
-                    //Get ItemStack from Slot
-                    ItemStack foundStack = wrapper.getStackInSlot(i);
-                    //Get modified ItemStack or new ItemStack
-                    ItemStack newStack = updatedSlots.containsKey(i) ? updatedSlots.get(i) : foundStack.copy();
+                for (int i = 0; i < wrapper.getSlots() && remainingItems > 0; i++) {
+                    if (wrapper.getStackInSlot(i).getItem().equals(item)) {
+                        //Get ItemStack from Slot
+                        ItemStack foundStack = wrapper.getStackInSlot(i);
+                        //Get modified ItemStack or new ItemStack
+                        ItemStack newStack = updatedSlots.containsKey(i) ? updatedSlots.get(i) : foundStack.copy();
 
-                    //Check if current ItemStack is empty
-                    if (newStack != ItemStack.EMPTY) {
-                        int oldCount = newStack.getCount();
-                        //Update ItemStack
-                        newStack.setCount(oldCount - remainingItems);
-                        remainingItems -= oldCount - newStack.getCount();
+                        //Check if current ItemStack is empty
+                        if (newStack != ItemStack.EMPTY) {
+                            int oldCount = newStack.getCount();
+                            //Update ItemStack
+                            newStack.setCount(oldCount - remainingItems);
+                            remainingItems -= oldCount - newStack.getCount();
 
-                        //change ItemStack to empty if count is 0
-                        if (newStack.getCount() == 0) {
-                            newStack = ItemStack.EMPTY;
+                            //change ItemStack to empty if count is 0
+                            if (newStack.getCount() == 0) {
+                                newStack = ItemStack.EMPTY;
+                            }
+
+                            //add remaining amount
+                            if (newStack.getCount() < 0) {
+                                remainingItems += (newStack.getCount() * (-1));
+                            }
+
+                            updatedSlots.put(i, newStack);
                         }
-
-                        //add remaining amount
-                        if (newStack.getCount() < 0) {
-                            remainingItems += (newStack.getCount() * (-1));
-                        }
-
-                        updatedSlots.put(i, newStack);
                     }
+                }
+
+                if (remainingItems > 0) {
+                    return false;
                 }
             }
 
-            if (remainingItems > 0) {
-                return false;
+            if (!simulate) {
+                //Update Inventory
+                updatedSlots.forEach(wrapper::setStackInSlot);
             }
-        }
-
-        if (!simulate) {
-            //Update Inventory
-            updatedSlots.forEach(wrapper::setStackInSlot);
         }
 
         return true;

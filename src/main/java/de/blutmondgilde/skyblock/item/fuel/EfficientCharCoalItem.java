@@ -22,4 +22,9 @@ public class EfficientCharCoalItem extends Item implements MinionFuelItem {
     public float getEfficiency(ItemStack stack, Level level) {
         return 0.20F;
     }
+
+    @Override
+    public boolean isFoil(ItemStack pStack) {
+        return true;
+    }
 }

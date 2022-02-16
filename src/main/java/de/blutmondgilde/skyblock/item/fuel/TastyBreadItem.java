@@ -24,4 +24,8 @@ public class TastyBreadItem extends Item implements MinionFuelItem {
         return 0.05F;
     }
 
+    @Override
+    public boolean isFoil(ItemStack pStack) {
+        return true;
+    }
 }

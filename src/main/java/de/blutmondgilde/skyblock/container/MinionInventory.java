@@ -52,12 +52,12 @@ public class MinionInventory extends ItemStackHandler {
 
         if (slot == 1) {
             //check minion special upgrade slot
-            return stack.is(SkyblockTags.MINION_SPECIAL_UPGRADES);
+            return stack.is(SkyblockTags.Items.MINION_SPECIAL_UPGRADES);
         }
 
         if (slot == 2 || slot == 3) {
             //check minion upgrade slot
-            return stack.is(SkyblockTags.MINION_UPGRADES);
+            return stack.is(SkyblockTags.Items.MINION_UPGRADES);
         }
 
         return super.isItemValid(slot, stack);
