@@ -23,6 +23,7 @@ public class ClientProxy extends CommonProxy {
     }
 
     private void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers e) {
+        //Miner Entities
         e.registerEntityRenderer(SkyblockRegistries.entities.coalMiner.get(), MinerRenderer::new);
         e.registerEntityRenderer(SkyblockRegistries.entities.cobblestoneMiner.get(), MinerRenderer::new);
         e.registerEntityRenderer(SkyblockRegistries.entities.copperMiner.get(), MinerRenderer::new);
@@ -41,6 +42,7 @@ public class ClientProxy extends CommonProxy {
         e.registerEntityRenderer(SkyblockRegistries.entities.quartzMiner.get(), MinerRenderer::new);
         e.registerEntityRenderer(SkyblockRegistries.entities.redstoneMiner.get(), MinerRenderer::new);
         e.registerEntityRenderer(SkyblockRegistries.entities.sandMiner.get(), MinerRenderer::new);
+        //Farmer Entities
     }
 
     @Override

@@ -1,6 +1,6 @@
 package de.blutmondgilde.skyblock.entity.ai.goal;
 
-import de.blutmondgilde.skyblock.entity.minion.miner.MinerEntity;
+import de.blutmondgilde.skyblock.entity.minion.MinionEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.phys.Vec3;
@@ -8,13 +8,13 @@ import net.minecraft.world.phys.Vec3;
 import javax.annotation.Nullable;
 
 public class LookAtTargetGoal extends Goal {
-    protected final MinerEntity mob;
+    protected final MinionEntity mob;
     @Nullable
     protected BlockPos lookAt;
     private int lookTime;
     protected final float probability = 0.02F;
 
-    public LookAtTargetGoal(MinerEntity pMob) {
+    public LookAtTargetGoal(MinionEntity pMob) {
         this.mob = pMob;
     }
 

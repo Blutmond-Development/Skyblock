@@ -1,10 +1,7 @@
 package de.blutmondgilde.skyblock.entity.minion.miner;
 
-import de.blutmondgilde.skyblock.entity.ai.goal.LookAtTargetGoal;
 import de.blutmondgilde.skyblock.entity.ai.goal.MineBlockGoal;
 import de.blutmondgilde.skyblock.entity.minion.MinionEntity;
-import lombok.Getter;
-import lombok.Setter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -33,9 +30,6 @@ public abstract class MinerEntity extends MinionEntity {
     private final AnimationFactory animationFactory = new AnimationFactory(this);
     private int replacementCounter = 100;
     private Optional<BlockPos> nextReplacement = Optional.empty();
-    @Getter
-    @Setter
-    private BlockPos targetBlock = BlockPos.ZERO;
 
     public MinerEntity(EntityType<? extends MinionEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -58,7 +52,6 @@ public abstract class MinerEntity extends MinionEntity {
     @Override
     protected void addGoals() {
         goalSelector.addGoal(1, new MineBlockGoal(getMiningTarget().get(), this, 20 * 15));
-        goalSelector.addGoal(1, new LookAtTargetGoal(this));
     }
 
     public abstract Supplier<Tags.IOptionalNamedTag<Block>> getMiningTarget();

@@ -3,12 +3,15 @@ package de.blutmondgilde.skyblock.entity.minion;
 import de.blutmondgilde.skyblock.Skyblock;
 import de.blutmondgilde.skyblock.container.MinionInventory;
 import de.blutmondgilde.skyblock.container.MinionMenu;
+import de.blutmondgilde.skyblock.entity.ai.goal.LookAtTargetGoal;
 import de.blutmondgilde.skyblock.fuel.MinionFuel;
 import de.blutmondgilde.skyblock.registry.SkyblockRegistries;
 import de.blutmondgilde.skyblock.util.FuelTimer;
 import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
@@ -54,6 +57,9 @@ public abstract class MinionEntity extends Mob implements OwnableEntity, IAnimat
     protected UUID ownerUUID = null;
     @Getter
     protected final MinionInventory inventory;
+    @Getter
+    @Setter
+    private BlockPos targetBlock = BlockPos.ZERO;
 
     public MinionEntity(EntityType<? extends MinionEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -250,6 +256,7 @@ public abstract class MinionEntity extends Mob implements OwnableEntity, IAnimat
 
     @Override
     protected void registerGoals() {
+        goalSelector.addGoal(2, new LookAtTargetGoal(this));
         addGoals();
     }
 
@@ -333,5 +340,8 @@ public abstract class MinionEntity extends Mob implements OwnableEntity, IAnimat
         }
     }
 
-    //TODO fuel modifier
+    @Override
+    public void checkDespawn() {
+        //Prevent Minions from despawning
+    }
 }
