@@ -19,6 +19,7 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -36,7 +37,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraftforge.common.ForgeMod;
+import net.minecraftforge.common.world.ForgeChunkManager;
 import net.minecraftforge.items.wrapper.InvWrapper;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
@@ -60,6 +63,7 @@ public abstract class MinionEntity extends Mob implements OwnableEntity, IAnimat
     @Getter
     @Setter
     private BlockPos targetBlock = BlockPos.ZERO;
+    private final ArrayList<LevelChunk> loadedChunks = new ArrayList<>();
 
     public MinionEntity(EntityType<? extends MinionEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -231,6 +235,16 @@ public abstract class MinionEntity extends Mob implements OwnableEntity, IAnimat
         return fuelTimer;
     }
 
+    @Override
+    public void remove(RemovalReason pReason) {
+        if (level instanceof ServerLevel serverLevel) {
+            loadedChunks.forEach(levelChunk -> {
+                ForgeChunkManager.forceChunk(serverLevel, Skyblock.MOD_ID, this, levelChunk.getPos().x, levelChunk.getPos().z, false, true);
+            });
+        }
+        super.remove(pReason);
+    }
+
     public void levelUp(Inventory inventory) {
         if (canLevelUp(inventory, true)) {
             canLevelUp(inventory, false);
@@ -250,6 +264,31 @@ public abstract class MinionEntity extends Mob implements OwnableEntity, IAnimat
     @Override
     public boolean canBeCollidedWith() {
         return false;
+    }
+
+    @Override
+    public boolean isPushable() {
+        return false;
+    }
+
+    @Override
+    public boolean isPushedByFluid() {
+        return false;
+    }
+
+    @Override
+    public void push(Entity pEntity) {
+
+    }
+
+    @Override
+    public void push(double pX, double pY, double pZ) {
+
+    }
+
+    @Override
+    public boolean ignoreExplosion() {
+        return true;
     }
 
     protected abstract void addGoals();
@@ -295,6 +334,22 @@ public abstract class MinionEntity extends Mob implements OwnableEntity, IAnimat
 
         fuelTimer.tick();
         entityData.set(FUEL_TIMER, fuelTimer.serializeNBT());
+
+        if (level instanceof ServerLevel serverLevel) {
+            if (loadedChunks.isEmpty()) {
+                for (int x = -2; x < 3; x++) {
+                    for (int z = -2; z < 3; z++) {
+                        BlockPos workingPos = blockPosition().offset(x, 0, z);
+                        LevelChunk workingChunk = serverLevel.getChunkAt(workingPos);
+                        if (!loadedChunks.contains(workingChunk)) loadedChunks.add(workingChunk);
+                    }
+                }
+
+                for (LevelChunk levelChunk : loadedChunks) {
+                    ForgeChunkManager.forceChunk(serverLevel, Skyblock.MOD_ID, this, levelChunk.getPos().x, levelChunk.getPos().z, true, true);
+                }
+            }
+        }
     }
 
     @Override
