@@ -1,6 +1,8 @@
 package de.blutmondgilde.skyblock.entity.minion.farmer;
 
+import de.blutmondgilde.skyblock.entity.ai.goal.BlockToSoilGoal;
 import de.blutmondgilde.skyblock.entity.ai.goal.BreakAndReplantGoal;
+import de.blutmondgilde.skyblock.entity.ai.goal.ReplantGoal;
 import de.blutmondgilde.skyblock.entity.minion.MinionEntity;
 import de.blutmondgilde.skyblock.entity.minion.miner.MinerEntity;
 import lombok.Getter;
@@ -22,7 +24,7 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import java.util.function.Predicate;
 
 public abstract class FarmerEntity extends MinionEntity {
-    private static final EntityDataAccessor<Boolean> BREAKING = SynchedEntityData.defineId(MinerEntity.class, EntityDataSerializers.BOOLEAN);
+    public static final EntityDataAccessor<Boolean> BREAKING = SynchedEntityData.defineId(MinerEntity.class, EntityDataSerializers.BOOLEAN);
     private final AnimationFactory animationFactory = new AnimationFactory(this);
     @Setter
     @Getter
@@ -34,6 +36,8 @@ public abstract class FarmerEntity extends MinionEntity {
 
     @Override
     protected void addGoals() {
+        if (canTillBlocks()) goalSelector.addGoal(1, new BlockToSoilGoal(this, 20 * 15));
+        goalSelector.addGoal(1, new ReplantGoal(this, 20 * 15));
         goalSelector.addGoal(1, new BreakAndReplantGoal(IsCorrectBlock(), this, 20 * 15));
     }
 
@@ -71,5 +75,9 @@ public abstract class FarmerEntity extends MinionEntity {
 
     public void setBreaking(boolean value) {
         this.entityData.set(BREAKING, value);
+    }
+
+    protected boolean canTillBlocks() {
+        return true;
     }
 }
