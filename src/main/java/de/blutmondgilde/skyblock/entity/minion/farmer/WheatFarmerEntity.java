@@ -5,8 +5,11 @@ import de.blutmondgilde.skyblock.registry.SkyblockRegistries;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.Map;
@@ -41,16 +44,22 @@ public class WheatFarmerEntity extends FarmerEntity {
 
     @Override
     protected MutableComponent getResultName() {
-        return null;
+        return Items.WHEAT.getName(new ItemStack(Items.WHEAT)).copy();
     }
 
     @Override
     public Predicate<BlockState> IsCorrectBlock() {
-        return null;
+        return state -> {
+            if (!state.getBlock().equals(Blocks.WHEAT)) return false;
+            if (!state.hasProperty(CropBlock.AGE)) return false;
+            //noinspection RedundantIfStatement
+            if (state.getValue(CropBlock.AGE) != CropBlock.MAX_AGE) return false;
+            return true;
+        };
     }
 
     @Override
     public BlockState getReplacementBlock() {
-        return null;
+        return Blocks.WHEAT.defaultBlockState();
     }
 }

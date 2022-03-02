@@ -2,7 +2,7 @@ package de.blutmondgilde.skyblock.registry;
 
 import de.blutmondgilde.skyblock.Skyblock;
 import de.blutmondgilde.skyblock.container.MinionMenu;
-import de.blutmondgilde.skyblock.entity.minion.miner.MinerEntity;
+import de.blutmondgilde.skyblock.entity.minion.MinionEntity;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.common.extensions.IForgeMenuType;
@@ -17,8 +17,8 @@ public class SkyblockContainer extends AbstractSkyblockRegistry {
         (windowId, inv, data) -> {
             Entity entity = Skyblock.getProxy().getLevel().getEntity(data.readInt());
 
-            if (entity instanceof MinerEntity minerEntity) {
-                return new MinionMenu(windowId, inv, minerEntity);
+            if (entity instanceof MinionEntity minionEntity) {
+                return new MinionMenu(windowId, inv, minionEntity);
             } else {
                 throw new IllegalStateException("Tried to open a miner minion inventory with a non miner minion entity!");
             }
