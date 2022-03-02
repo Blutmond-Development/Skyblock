@@ -82,7 +82,7 @@ public abstract class MinerEntity extends MinionEntity {
 
     @Override
     public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<>(this, "idle_controller", 0, this::checkAnimation));
+        data.addAnimationController(new AnimationController<>(this, "controller", 0, this::checkAnimation));
     }
 
     private PlayState checkAnimation(AnimationEvent<MinerEntity> e) {

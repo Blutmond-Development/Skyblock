@@ -1,6 +1,6 @@
 package de.blutmondgilde.skyblock.entity.ai.goal;
 
-import de.blutmondgilde.skyblock.entity.minion.miner.MinerEntity;
+import de.blutmondgilde.skyblock.entity.minion.farmer.FarmerEntity;
 import lombok.Setter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -8,25 +8,27 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.IPlantable;
 
 import java.util.List;
 import java.util.Optional;
-
-public class MineBlockGoal extends Goal {
-    private final Tags.IOptionalNamedTag<Block> targetBlock;
-    private final MinerEntity mob;
+import java.util.function.Predicate;
+//TODO doesn't at all <3
+public class BreakAndReplantGoal extends Goal {
+    private final Predicate<BlockState> blockStateCheck;
+    private final FarmerEntity mob;
     private final int requiredBreakTicks;
     private BlockPos targetPos = BlockPos.ZERO;
     private boolean passed = true;
     private int breakTicks = 0;
     @Setter
-    private ItemStack usedItem = new ItemStack(Items.NETHERITE_PICKAXE);
+    private ItemStack usedItem = new ItemStack(Items.NETHERITE_HOE);
 
 
-    public MineBlockGoal(Tags.IOptionalNamedTag<Block> targetBlock, MinerEntity mob, int requiredBreakTicks) {
-        this.targetBlock = targetBlock;
+    public BreakAndReplantGoal(Predicate<BlockState> blockStateCheck, FarmerEntity mob, int requiredBreakTicks) {
+        this.blockStateCheck = blockStateCheck;
         this.mob = mob;
         this.requiredBreakTicks = requiredBreakTicks;
     }
@@ -107,7 +109,12 @@ public class MineBlockGoal extends Goal {
                 mob.setBreaking(false);
 
             }
-            mob.level.setBlockAndUpdate(this.targetPos, mob.getReplacementBlock().get().defaultBlockState());
+
+            if (mob.getReplacementBlock().getBlock() instanceof IPlantable plantable) {
+                if (mob.level.getBlockState(this.targetPos.below()).canSustainPlant(mob.level, this.targetPos.below(), mob.getDirection(), plantable)) {
+                    mob.level.setBlockAndUpdate(this.targetPos, mob.getReplacementBlock());
+                }
+            }
         } else {
             if (mob.level instanceof ServerLevel) {
                 mob.setBreaking(true);
@@ -127,12 +134,12 @@ public class MineBlockGoal extends Goal {
     }
 
     /**
-     * Checks the {@link Block} of given {@link BlockPos} equals the {@link MineBlockGoal#targetBlock}
+     * Checks the {@link Block} of given {@link BlockPos} equals the {@link BreakAndReplantGoal#blockStateCheck}
      *
      * @param pos Position to check
      */
     private boolean isValidBlock(BlockPos pos) {
         if (pos.equals(mob.blockPosition().below())) return false; //Prevent the Miner from mining down
-        return this.targetBlock.contains(mob.level.getBlockState(pos).getBlock());
+        return this.blockStateCheck.test(mob.level.getBlockState(pos));
     }
 }

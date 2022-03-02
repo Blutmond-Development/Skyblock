@@ -352,6 +352,10 @@ public abstract class MinionEntity extends Mob implements OwnableEntity, IAnimat
         }
     }
 
+    public boolean isInventoryFull() {
+        return inventory.isFull();
+    }
+
     @Override
     public void addAdditionalSaveData(CompoundTag pCompound) {
         super.addAdditionalSaveData(pCompound);
