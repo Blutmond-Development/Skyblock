@@ -36,5 +36,7 @@ public class SkyblockItemTagGenerator extends ItemTagsProvider {
         tag(Tags.Items.RAW_MATERIALS).addTags(SkyblockTags.Items.MITHRIL_RAW);
         tag(Tags.Items.ORES).addTags(SkyblockTags.Items.MITHRIL_ORE);
         tag(Tags.Items.STORAGE_BLOCKS).addTags(SkyblockTags.Items.MITHRIL_BLOCK, SkyblockTags.Items.MITHRIL_RAW_BLOCK);
+
+        tag(SkyblockTags.Items.TILLABLE).add(Items.DIRT, Items.GRASS_BLOCK);
     }
 }

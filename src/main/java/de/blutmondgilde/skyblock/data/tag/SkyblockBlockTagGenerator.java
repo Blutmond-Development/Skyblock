@@ -28,5 +28,7 @@ public class SkyblockBlockTagGenerator extends BlockTagsProvider {
         //Tags
         tag(Tags.Blocks.ORES).addTags(SkyblockTags.Blocks.MITHRIL_ORE);
         tag(Tags.Blocks.STORAGE_BLOCKS).addTags(SkyblockTags.Blocks.MITHRIL_BLOCK, SkyblockTags.Blocks.MITHRIL_RAW_BLOCK);
+
+        tag(SkyblockTags.Blocks.TILLABLE).add(Blocks.DIRT, Blocks.GRASS_BLOCK);
     }
 }

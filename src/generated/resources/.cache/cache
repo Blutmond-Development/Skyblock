@@ -149,6 +149,7 @@ d2bd53be3bfc2a9a9179c4a1df5e3284e0a329c8 data/skyblock/recipes/raw_materials/mit
 7650685a867e70c6170d09baa945988e2f5aff67 data/skyblock/tags/blocks/ores/mithril.json
 cc91d7c2006689090f4a494d612a8e1919147d17 data/skyblock/tags/blocks/storage_blocks/mithril.json
 3ac31ccd291dcca5c075002d908c74296b78a9f9 data/skyblock/tags/blocks/storage_blocks/raw_mithril.json
+4f9c436f3734ac0e8241c71fe9592d1cd87ca453 data/skyblock/tags/blocks/tillable.json
 2d0fbd340f5db9845141a07a3809dcb2a94e35ae data/skyblock/tags/items/hard_stone.json
 100c57c33fc266e42b63b14d507afcaccfbbe887 data/skyblock/tags/items/ice.json
 1aac54455747da0a81e724f9e6309e7bee82ef22 data/skyblock/tags/items/ingot/mithril.json
@@ -159,3 +160,4 @@ cc91d7c2006689090f4a494d612a8e1919147d17 data/skyblock/tags/blocks/storage_block
 f23cf8289df60c99f7d223a70fda082d1f378232 data/skyblock/tags/items/raw_materials/mithril.json
 cc91d7c2006689090f4a494d612a8e1919147d17 data/skyblock/tags/items/storage_blocks/mithril.json
 3ac31ccd291dcca5c075002d908c74296b78a9f9 data/skyblock/tags/items/storage_blocks/raw_mithril.json
+4f9c436f3734ac0e8241c71fe9592d1cd87ca453 data/skyblock/tags/items/tillable.json
