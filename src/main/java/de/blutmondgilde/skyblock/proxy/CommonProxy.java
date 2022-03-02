@@ -64,6 +64,8 @@ public abstract class CommonProxy {
         registerEntityAttribute(e, SkyblockRegistries.entities.quartzMiner);
         registerEntityAttribute(e, SkyblockRegistries.entities.redstoneMiner);
         registerEntityAttribute(e, SkyblockRegistries.entities.sandMiner);
+
+        registerEntityAttribute(e,SkyblockRegistries.entities.wheatFarmer);
     }
 
     private <T extends MinionEntity> void registerEntityAttribute(EntityAttributeCreationEvent e, RegistryObject<EntityType<T>> entry) {

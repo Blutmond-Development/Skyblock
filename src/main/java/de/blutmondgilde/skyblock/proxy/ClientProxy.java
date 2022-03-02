@@ -1,6 +1,7 @@
 package de.blutmondgilde.skyblock.proxy;
 
 import de.blutmondgilde.skyblock.client.event.handler.FuelToolTipHandler;
+import de.blutmondgilde.skyblock.client.renderer.FarmerRenderer;
 import de.blutmondgilde.skyblock.client.renderer.MinerRenderer;
 import de.blutmondgilde.skyblock.client.screen.MinerMinionContainerScreen;
 import de.blutmondgilde.skyblock.registry.SkyblockRegistries;
@@ -43,6 +44,7 @@ public class ClientProxy extends CommonProxy {
         e.registerEntityRenderer(SkyblockRegistries.entities.redstoneMiner.get(), MinerRenderer::new);
         e.registerEntityRenderer(SkyblockRegistries.entities.sandMiner.get(), MinerRenderer::new);
         //Farmer Entities
+        e.registerEntityRenderer(SkyblockRegistries.entities.wheatFarmer.get(), FarmerRenderer::new);
     }
 
     @Override

@@ -44,6 +44,8 @@ public class SkyblockBlockStateGenerator extends BlockStateProvider {
         compressedBlockModel(SkyblockRegistries.blocks.compressedQuartzBlock, "quartz_block");
         compressedBlockModel(SkyblockRegistries.blocks.compressedLapisBlock, "lapis_block");
         compressedBlockModel(SkyblockRegistries.blocks.compressedSand, "sand");
+
+        compressedBlockModel(SkyblockRegistries.blocks.compressedHayBlock, "hay_block");
     }
 
     private void compressedBlockModel(RegistryObject<? extends Block> block, ResourceLocation texture) {

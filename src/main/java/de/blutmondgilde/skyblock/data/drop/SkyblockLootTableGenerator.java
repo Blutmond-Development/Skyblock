@@ -63,6 +63,7 @@ public class SkyblockLootTableGenerator extends LootTableProvider {
             dropSelf(SkyblockRegistries.blocks.compressedEndStone.get());
             dropSelf(SkyblockRegistries.blocks.mithrilRawBlock.get());
             dropSelf(SkyblockRegistries.blocks.compressedQuartzBlock.get());
+            dropSelf(SkyblockRegistries.blocks.compressedHayBlock.get());
 
             oreDrop(SkyblockRegistries.blocks.mithrilOre, SkyblockRegistries.items.mithrilRaw);
             oreDrop(SkyblockRegistries.blocks.mithrilDeepslateOre, SkyblockRegistries.items.mithrilRaw);

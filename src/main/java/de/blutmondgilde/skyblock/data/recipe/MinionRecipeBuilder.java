@@ -58,6 +58,19 @@ public class MinionRecipeBuilder implements RecipeBuilder {
                 ItemPredicate.Builder.item().of(Items.WOODEN_PICKAXE).build()));
     }
 
+    public static MinionRecipeBuilder farmer(String name, Tag<Item> material, EntityType<? extends MinionEntity> minionType) {
+        return new MinionRecipeBuilder(name, new ItemStack(SkyblockRegistries.items.pickedMinion.get()), minionType)
+            .pattern("XXX")
+            .pattern("XCX")
+            .pattern("XXX")
+            .define('X', material)
+            .define('C', Items.WOODEN_HOE)
+            .group("skyblock:minion")
+            .unlockedBy("minion_unlock", InventoryChangeTrigger.TriggerInstance.hasItems(
+                ItemPredicate.Builder.item().of(material).build(),
+                ItemPredicate.Builder.item().of(Items.WOODEN_HOE).build()));
+    }
+
     @Override
     public MinionRecipeBuilder unlockedBy(String pCriterionName, CriterionTriggerInstance pCriterionTrigger) {
         this.advancement.addCriterion(pCriterionName, pCriterionTrigger);

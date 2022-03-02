@@ -1,6 +1,7 @@
 package de.blutmondgilde.skyblock.registry;
 
 import de.blutmondgilde.skyblock.entity.minion.MinionEntity;
+import de.blutmondgilde.skyblock.entity.minion.farmer.WheatFarmerEntity;
 import de.blutmondgilde.skyblock.entity.minion.miner.CoalMinerEntity;
 import de.blutmondgilde.skyblock.entity.minion.miner.CobblestoneMinerEntity;
 import de.blutmondgilde.skyblock.entity.minion.miner.CopperMinerEntity;
@@ -47,6 +48,7 @@ public class SkyblockEntities extends AbstractSkyblockRegistry {
     public final RegistryObject<EntityType<QuartzMinerEntity>> quartzMiner = minion("quartz_miner", QuartzMinerEntity::new);
     public final RegistryObject<EntityType<RedstoneMinerEntity>> redstoneMiner = minion("redstone_miner", RedstoneMinerEntity::new);
     public final RegistryObject<EntityType<SandMinerEntity>> sandMiner = minion("sand_miner", SandMinerEntity::new);
+    public final RegistryObject<EntityType<WheatFarmerEntity>> wheatFarmer = minion("wheat_farmer", WheatFarmerEntity::new);
 
     private <T extends MinionEntity> RegistryObject<EntityType<T>> minion(String name, EntityType.EntityFactory<T> factory) {
         return registry.register(name, () -> EntityType.Builder.of(factory, MobCategory.CREATURE).sized(0.6F, 1.95F).build(new SkyblockResourceLocation(name).toString()));

@@ -82,6 +82,8 @@ public class SkyblockItems extends AbstractSkyblockRegistry {
         registry.register("compressed_end_stone", () -> new CompressedBlockItem(SkyblockRegistries.blocks.compressedEndStone.get()));
     public final RegistryObject<CompressedBlockItem> compressedQuartzBlock =
         registry.register("compressed_quartz_block", () -> new CompressedBlockItem(SkyblockRegistries.blocks.compressedQuartzBlock.get()));
+    public final RegistryObject<CompressedBlockItem> compressedHayBlock =
+        registry.register("compressed_hay_block", () -> new CompressedBlockItem(SkyblockRegistries.blocks.compressedHayBlock.get()));
 
     @Override
     void register(IEventBus modBus) {

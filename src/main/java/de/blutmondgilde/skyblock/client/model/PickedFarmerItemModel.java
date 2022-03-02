@@ -5,21 +5,19 @@ import de.blutmondgilde.skyblock.util.SkyblockResourceLocation;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 
-public class PickedMinionItemModel extends AnimatedGeoModel<PickedMinionItem> {
-    //TODO switch values for other minions
-
+public class PickedFarmerItemModel extends AnimatedGeoModel<PickedMinionItem> {
     @Override
     public ResourceLocation getModelLocation(PickedMinionItem object) {
-        return new SkyblockResourceLocation("geo/item.miner.geo.json");
+        return new SkyblockResourceLocation("geo/item.farmer.geo.json");
     }
 
     @Override
     public ResourceLocation getTextureLocation(PickedMinionItem object) {
-        return new SkyblockResourceLocation("textures/entity/miner.png");
+        return new SkyblockResourceLocation("textures/entity/farmer.png");
     }
 
     @Override
     public ResourceLocation getAnimationFileLocation(PickedMinionItem animatable) {
-        return new SkyblockResourceLocation("animations/item.miner.animation.json");
+        return new SkyblockResourceLocation("animations/item.farmer.animation.json");
     }
 }
