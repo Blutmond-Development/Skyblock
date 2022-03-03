@@ -46,6 +46,9 @@ public class SkyblockCraftingRecipeGenerator extends RecipeProvider {
         MinionRecipeBuilder.miner("sand", Tags.Items.SAND, SkyblockRegistries.entities.sandMiner.get()).save(consumer);
         //Farmer Recipe
         MinionRecipeBuilder.farmer("wheat", Tags.Items.CROPS_WHEAT, SkyblockRegistries.entities.wheatFarmer.get()).save(consumer);
+        MinionRecipeBuilder.farmer("carrot", Tags.Items.CROPS_CARROT, SkyblockRegistries.entities.carrotFarmer.get()).save(consumer);
+        MinionRecipeBuilder.farmer("potato", Tags.Items.CROPS_POTATO, SkyblockRegistries.entities.potatoFarmer.get()).save(consumer);
+        MinionRecipeBuilder.farmer("beetroot", Tags.Items.CROPS_BEETROOT, SkyblockRegistries.entities.beetrootFarmer.get()).save(consumer);
         //Ore Smelting Recipes
         rawToIngotSmelting(SkyblockTags.Items.MITHRIL_RAW, SkyblockRegistries.items.mithrilIngot.get(), consumer);
         rawToIngotSmelting(SkyblockTags.Items.MITHRIL_ORE, SkyblockRegistries.items.mithrilIngot.get(), consumer);

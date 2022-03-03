@@ -34,6 +34,11 @@ public class SkyblockItems extends AbstractSkyblockRegistry {
     public final RegistryObject<CompressedItem> compressedQuartz = registry.register("compressed_quartz", CompressedItem::new);
     public final RegistryObject<CompressedItem> compressedMithril = registry.register("compressed_mithril", CompressedItem::new);
     public final RegistryObject<CompressedItem> compressedGlowstone = registry.register("compressed_glowstone", CompressedItem::new);
+    public final RegistryObject<CompressedItem> compressedCarrot = registry.register("compressed_carrot", CompressedItem::new);
+    public final RegistryObject<CompressedItem> compressedGoldenCarrot = registry.register("compressed_golden_carrot", CompressedItem::new);
+    public final RegistryObject<CompressedItem> compressedPotato = registry.register("compressed_potato", CompressedItem::new);
+    public final RegistryObject<CompressedItem> compressedBakedPotato = registry.register("compressed_baked_potato", CompressedItem::new);
+    public final RegistryObject<CompressedItem> compressedBeetroot = registry.register("compressed_beetroot", CompressedItem::new);
     public final RegistryObject<NoEffectItem> mithrilRaw = registry.register("raw_mithril", NoEffectItem::new);
     public final RegistryObject<NoEffectItem> mithrilIngot = registry.register("mithril_ingot", NoEffectItem::new);
 

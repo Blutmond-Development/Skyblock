@@ -46,29 +46,36 @@ public abstract class CommonProxy {
     protected void clientSetup(final FMLClientSetupEvent e) {}
 
     protected void addEntityAttributes(EntityAttributeCreationEvent e) {
-        registerEntityAttribute(e, SkyblockRegistries.entities.coalMiner);
-        registerEntityAttribute(e, SkyblockRegistries.entities.cobblestoneMiner);
-        registerEntityAttribute(e, SkyblockRegistries.entities.copperMiner);
-        registerEntityAttribute(e, SkyblockRegistries.entities.diamondMiner);
-        registerEntityAttribute(e, SkyblockRegistries.entities.emeraldMiner);
-        registerEntityAttribute(e, SkyblockRegistries.entities.endStoneMiner);
-        registerEntityAttribute(e, SkyblockRegistries.entities.glowstoneMiner);
-        registerEntityAttribute(e, SkyblockRegistries.entities.goldMiner);
-        registerEntityAttribute(e, SkyblockRegistries.entities.gravelMiner);
-        registerEntityAttribute(e, SkyblockRegistries.entities.hardStoneMiner);
-        registerEntityAttribute(e, SkyblockRegistries.entities.iceMiner);
-        registerEntityAttribute(e, SkyblockRegistries.entities.ironMiner);
-        registerEntityAttribute(e, SkyblockRegistries.entities.lapisMiner);
-        registerEntityAttribute(e, SkyblockRegistries.entities.mithrilMiner);
-        registerEntityAttribute(e, SkyblockRegistries.entities.obsidianMiner);
-        registerEntityAttribute(e, SkyblockRegistries.entities.quartzMiner);
-        registerEntityAttribute(e, SkyblockRegistries.entities.redstoneMiner);
-        registerEntityAttribute(e, SkyblockRegistries.entities.sandMiner);
+        registerMinerAttribute(e, SkyblockRegistries.entities.coalMiner);
+        registerMinerAttribute(e, SkyblockRegistries.entities.cobblestoneMiner);
+        registerMinerAttribute(e, SkyblockRegistries.entities.copperMiner);
+        registerMinerAttribute(e, SkyblockRegistries.entities.diamondMiner);
+        registerMinerAttribute(e, SkyblockRegistries.entities.emeraldMiner);
+        registerMinerAttribute(e, SkyblockRegistries.entities.endStoneMiner);
+        registerMinerAttribute(e, SkyblockRegistries.entities.glowstoneMiner);
+        registerMinerAttribute(e, SkyblockRegistries.entities.goldMiner);
+        registerMinerAttribute(e, SkyblockRegistries.entities.gravelMiner);
+        registerMinerAttribute(e, SkyblockRegistries.entities.hardStoneMiner);
+        registerMinerAttribute(e, SkyblockRegistries.entities.iceMiner);
+        registerMinerAttribute(e, SkyblockRegistries.entities.ironMiner);
+        registerMinerAttribute(e, SkyblockRegistries.entities.lapisMiner);
+        registerMinerAttribute(e, SkyblockRegistries.entities.mithrilMiner);
+        registerMinerAttribute(e, SkyblockRegistries.entities.obsidianMiner);
+        registerMinerAttribute(e, SkyblockRegistries.entities.quartzMiner);
+        registerMinerAttribute(e, SkyblockRegistries.entities.redstoneMiner);
+        registerMinerAttribute(e, SkyblockRegistries.entities.sandMiner);
 
-        registerEntityAttribute(e,SkyblockRegistries.entities.wheatFarmer);
+        registerFarmerAttribute(e, SkyblockRegistries.entities.wheatFarmer);
+        registerFarmerAttribute(e, SkyblockRegistries.entities.carrotFarmer);
+        registerFarmerAttribute(e, SkyblockRegistries.entities.potatoFarmer);
+        registerFarmerAttribute(e, SkyblockRegistries.entities.beetrootFarmer);
     }
 
-    private <T extends MinionEntity> void registerEntityAttribute(EntityAttributeCreationEvent e, RegistryObject<EntityType<T>> entry) {
+    private <T extends MinionEntity> void registerMinerAttribute(EntityAttributeCreationEvent e, RegistryObject<EntityType<T>> entry) {
+        e.put(entry.get(), MinerEntity.setCustomAttributes().build());
+    }
+
+    private <T extends MinionEntity> void registerFarmerAttribute(EntityAttributeCreationEvent e, RegistryObject<EntityType<T>> entry) {
         e.put(entry.get(), MinerEntity.setCustomAttributes().build());
     }
 }

@@ -45,6 +45,9 @@ public class ClientProxy extends CommonProxy {
         e.registerEntityRenderer(SkyblockRegistries.entities.sandMiner.get(), MinerRenderer::new);
         //Farmer Entities
         e.registerEntityRenderer(SkyblockRegistries.entities.wheatFarmer.get(), FarmerRenderer::new);
+        e.registerEntityRenderer(SkyblockRegistries.entities.carrotFarmer.get(), FarmerRenderer::new);
+        e.registerEntityRenderer(SkyblockRegistries.entities.potatoFarmer.get(), FarmerRenderer::new);
+        e.registerEntityRenderer(SkyblockRegistries.entities.beetrootFarmer.get(), FarmerRenderer::new);
     }
 
     @Override

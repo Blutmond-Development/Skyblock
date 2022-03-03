@@ -36,6 +36,11 @@ public class SkyblockItemModelGenerator extends ItemModelProvider {
         compressedItemModel(SkyblockRegistries.items.compressedEmerald, "emerald");
         compressedItemModel(SkyblockRegistries.items.compressedQuartz, "quartz");
         compressedItemModel(SkyblockRegistries.items.compressedGlowstone, "glowstone_dust");
+        compressedItemModel(SkyblockRegistries.items.compressedCarrot, "carrot");
+        compressedItemModel(SkyblockRegistries.items.compressedGoldenCarrot, "golden_carrot");
+        compressedItemModel(SkyblockRegistries.items.compressedPotato, "potato");
+        compressedItemModel(SkyblockRegistries.items.compressedBakedPotato, "baked_potato");
+        compressedItemModel(SkyblockRegistries.items.compressedBeetroot, "beetroot");
     }
 
     private void singleTexture(RegistryObject<? extends Item> item) {

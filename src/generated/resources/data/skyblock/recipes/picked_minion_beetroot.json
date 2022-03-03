@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "skyblock:minion",
+  "pattern": [
+    "XXX",
+    "XCX",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "tag": "forge:crops/beetroot"
+    },
+    "C": {
+      "item": "minecraft:wooden_hoe"
+    }
+  },
+  "result": {
+    "type": "forge:nbt",
+    "item": "skyblock:picked_minion",
+    "nbt": {
+      "minion": "skyblock:beetroot_farmer"
+    }
+  }
+}
