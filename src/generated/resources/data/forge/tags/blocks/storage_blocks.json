@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "#skyblock:storage_blocks/mithril",
+    "#skyblock:storage_blocks/raw_mithril"
+  ]
+}

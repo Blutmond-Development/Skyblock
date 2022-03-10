@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "skyblock:raw_materials/mithril_blasting"
+    ]
+  },
+  "criteria": {
+    "ingot_unlock": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "skyblock:raw_materials/mithril"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "skyblock:raw_materials/mithril_blasting"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "ingot_unlock",
+      "has_the_recipe"
+    ]
+  ]
+}

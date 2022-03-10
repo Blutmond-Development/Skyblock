@@ -1,0 +1,37 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "skyblock:picked_minion_iron"
+    ]
+  },
+  "criteria": {
+    "minion_unlock": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:ingots/iron"
+          },
+          {
+            "items": [
+              "minecraft:wooden_pickaxe"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "skyblock:picked_minion_iron"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "minion_unlock",
+      "has_the_recipe"
+    ]
+  ]
+}

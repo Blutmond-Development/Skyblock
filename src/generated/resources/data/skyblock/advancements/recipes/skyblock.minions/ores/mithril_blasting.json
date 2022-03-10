@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "skyblock:ores/mithril_blasting"
+    ]
+  },
+  "criteria": {
+    "ingot_unlock": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "skyblock:ores/mithril"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "skyblock:ores/mithril_blasting"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "ingot_unlock",
+      "has_the_recipe"
+    ]
+  ]
+}

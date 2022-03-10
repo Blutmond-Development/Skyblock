@@ -1,0 +1,37 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "skyblock:picked_minion_potato"
+    ]
+  },
+  "criteria": {
+    "minion_unlock": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:crops/potato"
+          },
+          {
+            "items": [
+              "minecraft:wooden_hoe"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "skyblock:picked_minion_potato"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "minion_unlock",
+      "has_the_recipe"
+    ]
+  ]
+}
